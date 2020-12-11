@@ -9,10 +9,7 @@ import org.apache.storm.topology.BoltDeclarer;
 import org.apache.storm.topology.IRichSpout;
 import org.apache.storm.topology.TopologyBuilder;
 import com.main.java.utils.StormUtilities;
-import com.flipkart.utilities.ConfigClientUtils;
 import com.google.common.collect.Sets;
-import com.flipkart.topologies.bolts.ByteArrayDataPublisherBolt;
-import com.flipkart.topologies.bolts.DatabasePublisherBolt;
 import org.apache.commons.lang.StringUtils;
 import java.util.*;
 

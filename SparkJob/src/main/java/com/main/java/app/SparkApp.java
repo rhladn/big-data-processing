@@ -23,7 +23,7 @@ import java.util.*;
 
 /**
  * created by rahul.tandon
- * Given cohortId to fetch the data from hdfs and create key:user value:list of cohorts
+ * Given segmenta to fetch the data from hdfs and create key:user value:list of cohorts
  */
 public class SparkApp implements Serializable {
 
@@ -33,7 +33,7 @@ public class SparkApp implements Serializable {
     private static Map<String, LongAccumulator> countersMap;
 
     /**
-     * The complete flow of User Cohort
+     * The complete flow of Spark Job
      */
     private void process() {
         JavaPairRDD<String, String>[] userCohortRDDArray = new JavaPairRDD[cohortId.size()];
