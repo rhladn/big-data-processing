@@ -1,6 +1,8 @@
 package com.main.java.app;
 
 import com.main.java.avro.CohortInfo;
+import com.main.java.avro.Employee;
+import com.main.java.avro.EmployeeProfile;
 import com.main.java.avro.User;
 import com.main.java.avro.UserCohort;
 import com.main.java.constants.Constants;
@@ -44,7 +46,7 @@ public class SparkApp implements Serializable {
                 throw new RuntimeException("exception while processing cohort id " + cohortId.get(i));
             }
         }
-        JavaRDD<UserCohort> userCohortRDD = convert(javaSparkContext, countersMap, userCohortRDDArray);
+        JavaRDD<EmployeeProfile> userCohortRDD = convert(javaSparkContext, countersMap, userCohortRDDArray);
         writeRDDtoAvro(javaSparkContext, userCohortRDD, outputDir);
     }
 
@@ -53,8 +55,8 @@ public class SparkApp implements Serializable {
      * @param outputDir        this is the output directory where the data is pushed which is present in config bcuket of airflow
      * @param javaSparkContext This function writes rdd to hdfs path
      */
-    private void writeRDDtoAvro(JavaSparkContext javaSparkContext, JavaRDD<UserCohort> userCohortRDD, String outputDir) {
-        SparkAvroUtils.setAvroOutputKeyValue(javaSparkContext, Schema.create(Schema.Type.STRING).toString(), UserCohort.getClassSchema().toString());
+    private void writeRDDtoAvro(JavaSparkContext javaSparkContext, JavaRDD<EmployeeProfile> userCohortRDD, String outputDir) {
+        SparkAvroUtils.setAvroOutputKeyValue(javaSparkContext, Schema.create(Schema.Type.STRING).toString(), EmployeeProfile.getClassSchema().toString());
         JavaPairRDD<AvroKey, AvroValue> userCohortAvroPairRDD = userCohortRDD.mapToPair(userCohort -> new Tuple2<>(
                 new AvroKey<>(userCohort.getUserId()), new AvroValue<>(userCohort)));
         SparkAvroUtils.writeAsKeyValueOutputAvro(javaSparkContext, userCohortAvroPairRDD, outputDir);
@@ -66,10 +68,10 @@ public class SparkApp implements Serializable {
      *                      This function gets the rdd from the inputFilepath
      */
     private JavaPairRDD<String, String> getUserToCohortRDD(String cohortId, String inputFilePath) {
-        SparkAvroUtils.setAvroInputKeyValue(javaSparkContext, User.getClassSchema().toString(), Schema.create(Schema.Type.STRING).toString());
+        SparkAvroUtils.setAvroInputKeyValue(javaSparkContext, Employee.getClassSchema().toString(), Schema.create(Schema.Type.STRING).toString());
         JavaPairRDD<AvroKey, AvroValue> userCohortAvroRDD = SparkAvroUtils.readAsKeyInputAvro(javaSparkContext, inputFilePath);
         return userCohortAvroRDD.mapToPair(tuple -> {
-            User user = (User) tuple._1.datum();
+            Employee user = (Employee) tuple._1.datum();
             return new Tuple2<>(user.getUserid(), cohortId);
         });
     }
@@ -135,9 +137,9 @@ public class SparkApp implements Serializable {
      * @return userCohortRDD this is the UserCohort rdd which is returned consisting of user cohort data
      * This function converts array of rdd which contains the cohort, userId pairs to user to cohort rdd
      */
-    private JavaRDD<UserCohort> convert(JavaSparkContext javaSparkContext, Map<String, LongAccumulator> countersMap, JavaPairRDD<String, String>[] userCohortRDDArray) {
+    private JavaRDD<EmployeeProfile> convert(JavaSparkContext javaSparkContext, Map<String, LongAccumulator> countersMap, JavaPairRDD<String, String>[] userCohortRDDArray) {
         JavaPairRDD<String, String> unionRDD = javaSparkContext.union(userCohortRDDArray);
-        JavaRDD<UserCohort> userCohortRDD = unionRDD
+        JavaRDD<EmployeeProfile> userCohortRDD = unionRDD
                 .mapToPair(usersToCohort -> {
                     countersMap.get(Counters.USER_COHORT_PAIRS).add(1L);
                     return new Tuple2<>(usersToCohort._1, usersToCohort._2);
@@ -147,7 +149,7 @@ public class SparkApp implements Serializable {
                     List<String> cohortList = new ArrayList<>();
                     List<CohortInfo> cohortInfoList = new ArrayList<>();
                     cohortList.addAll((Collection<? extends String>) pair._2);
-                    UserCohort userCohort = new UserCohort();
+                    EmployeeProfile userCohort = new EmployeeProfile();
                     userCohort.setUserId(pair._1);
                     cohortList.forEach(cohort -> {
                         CohortInfo cohortInfo = new CohortInfo();

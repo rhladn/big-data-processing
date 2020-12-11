@@ -6,8 +6,8 @@
 package com.main.java.avro;  
 @SuppressWarnings("all")
 @org.apache.avro.specific.AvroGenerated
-public class User extends org.apache.avro.specific.SpecificRecordBase implements org.apache.avro.specific.SpecificRecord {
-  public static final org.apache.avro.Schema SCHEMA$ = new org.apache.avro.Schema.Parser().parse("{\"type\":\"record\",\"name\":\"User\",\"namespace\":\"com.main.java.avro\",\"fields\":[{\"name\":\"userid\",\"type\":[\"null\",{\"type\":\"string\",\"avro.java.string\":\"String\"}],\"default\":null},{\"name\":\"adid\",\"type\":[\"null\",{\"type\":\"string\",\"avro.java.string\":\"String\"}],\"default\":null},{\"name\":\"email\",\"type\":[\"null\",{\"type\":\"string\",\"avro.java.string\":\"String\"}],\"default\":null},{\"name\":\"phone\",\"type\":[\"null\",{\"type\":\"string\",\"avro.java.string\":\"String\"}],\"default\":null},{\"name\":\"data\",\"type\":[\"null\",{\"type\":\"string\",\"avro.java.string\":\"String\"}],\"default\":null}]}");
+public class Employee extends org.apache.avro.specific.SpecificRecordBase implements org.apache.avro.specific.SpecificRecord {
+  public static final org.apache.avro.Schema SCHEMA$ = new org.apache.avro.Schema.Parser().parse("{\"type\":\"record\",\"name\":\"Employee\",\"namespace\":\"com.main.java.avro\",\"fields\":[{\"name\":\"userid\",\"type\":[\"null\",{\"type\":\"string\",\"avro.java.string\":\"String\"}],\"default\":null},{\"name\":\"adid\",\"type\":[\"null\",{\"type\":\"string\",\"avro.java.string\":\"String\"}],\"default\":null},{\"name\":\"email\",\"type\":[\"null\",{\"type\":\"string\",\"avro.java.string\":\"String\"}],\"default\":null},{\"name\":\"phone\",\"type\":[\"null\",{\"type\":\"string\",\"avro.java.string\":\"String\"}],\"default\":null},{\"name\":\"data\",\"type\":[\"null\",{\"type\":\"string\",\"avro.java.string\":\"String\"}],\"default\":null}]}");
   public static org.apache.avro.Schema getClassSchema() { return SCHEMA$; }
   @Deprecated public java.lang.String userid;
   @Deprecated public java.lang.String adid;
@@ -18,12 +18,12 @@ public class User extends org.apache.avro.specific.SpecificRecordBase implements
   /**
    * Default constructor.
    */
-  public User() {}
+  public Employee() {}
 
   /**
    * All-args constructor.
    */
-  public User(java.lang.String userid, java.lang.String adid, java.lang.String email, java.lang.String phone, java.lang.String data) {
+  public Employee(java.lang.String userid, java.lang.String adid, java.lang.String email, java.lang.String phone, java.lang.String data) {
     this.userid = userid;
     this.adid = adid;
     this.email = email;
@@ -131,26 +131,26 @@ public class User extends org.apache.avro.specific.SpecificRecordBase implements
     this.data = value;
   }
 
-  /** Creates a new User RecordBuilder */
-  public static com.main.java.avro.User.Builder newBuilder() {
-    return new com.main.java.avro.User.Builder();
+  /** Creates a new Employee RecordBuilder */
+  public static com.main.java.avro.Employee.Builder newBuilder() {
+    return new com.main.java.avro.Employee.Builder();
   }
   
-  /** Creates a new User RecordBuilder by copying an existing Builder */
-  public static com.main.java.avro.User.Builder newBuilder(com.main.java.avro.User.Builder other) {
-    return new com.main.java.avro.User.Builder(other);
+  /** Creates a new Employee RecordBuilder by copying an existing Builder */
+  public static com.main.java.avro.Employee.Builder newBuilder(com.main.java.avro.Employee.Builder other) {
+    return new com.main.java.avro.Employee.Builder(other);
   }
   
-  /** Creates a new User RecordBuilder by copying an existing User instance */
-  public static com.main.java.avro.User.Builder newBuilder(com.main.java.avro.User other) {
-    return new com.main.java.avro.User.Builder(other);
+  /** Creates a new Employee RecordBuilder by copying an existing Employee instance */
+  public static com.main.java.avro.Employee.Builder newBuilder(com.main.java.avro.Employee other) {
+    return new com.main.java.avro.Employee.Builder(other);
   }
   
   /**
-   * RecordBuilder for User instances.
+   * RecordBuilder for Employee instances.
    */
-  public static class Builder extends org.apache.avro.specific.SpecificRecordBuilderBase<User>
-    implements org.apache.avro.data.RecordBuilder<User> {
+  public static class Builder extends org.apache.avro.specific.SpecificRecordBuilderBase<Employee>
+    implements org.apache.avro.data.RecordBuilder<Employee> {
 
     private java.lang.String userid;
     private java.lang.String adid;
@@ -160,17 +160,17 @@ public class User extends org.apache.avro.specific.SpecificRecordBase implements
 
     /** Creates a new Builder */
     private Builder() {
-      super(com.main.java.avro.User.SCHEMA$);
+      super(com.main.java.avro.Employee.SCHEMA$);
     }
     
     /** Creates a Builder by copying an existing Builder */
-    private Builder(com.main.java.avro.User.Builder other) {
+    private Builder(com.main.java.avro.Employee.Builder other) {
       super(other);
     }
     
-    /** Creates a Builder by copying an existing User instance */
-    private Builder(com.main.java.avro.User other) {
-            super(com.main.java.avro.User.SCHEMA$);
+    /** Creates a Builder by copying an existing Employee instance */
+    private Builder(com.main.java.avro.Employee other) {
+            super(com.main.java.avro.Employee.SCHEMA$);
       if (isValidValue(fields()[0], other.userid)) {
         this.userid = data().deepCopy(fields()[0].schema(), other.userid);
         fieldSetFlags()[0] = true;
@@ -199,7 +199,7 @@ public class User extends org.apache.avro.specific.SpecificRecordBase implements
     }
     
     /** Sets the value of the 'userid' field */
-    public com.main.java.avro.User.Builder setUserid(java.lang.String value) {
+    public com.main.java.avro.Employee.Builder setUserid(java.lang.String value) {
       validate(fields()[0], value);
       this.userid = value;
       fieldSetFlags()[0] = true;
@@ -212,7 +212,7 @@ public class User extends org.apache.avro.specific.SpecificRecordBase implements
     }
     
     /** Clears the value of the 'userid' field */
-    public com.main.java.avro.User.Builder clearUserid() {
+    public com.main.java.avro.Employee.Builder clearUserid() {
       userid = null;
       fieldSetFlags()[0] = false;
       return this;
@@ -224,7 +224,7 @@ public class User extends org.apache.avro.specific.SpecificRecordBase implements
     }
     
     /** Sets the value of the 'adid' field */
-    public com.main.java.avro.User.Builder setAdid(java.lang.String value) {
+    public com.main.java.avro.Employee.Builder setAdid(java.lang.String value) {
       validate(fields()[1], value);
       this.adid = value;
       fieldSetFlags()[1] = true;
@@ -237,7 +237,7 @@ public class User extends org.apache.avro.specific.SpecificRecordBase implements
     }
     
     /** Clears the value of the 'adid' field */
-    public com.main.java.avro.User.Builder clearAdid() {
+    public com.main.java.avro.Employee.Builder clearAdid() {
       adid = null;
       fieldSetFlags()[1] = false;
       return this;
@@ -249,7 +249,7 @@ public class User extends org.apache.avro.specific.SpecificRecordBase implements
     }
     
     /** Sets the value of the 'email' field */
-    public com.main.java.avro.User.Builder setEmail(java.lang.String value) {
+    public com.main.java.avro.Employee.Builder setEmail(java.lang.String value) {
       validate(fields()[2], value);
       this.email = value;
       fieldSetFlags()[2] = true;
@@ -262,7 +262,7 @@ public class User extends org.apache.avro.specific.SpecificRecordBase implements
     }
     
     /** Clears the value of the 'email' field */
-    public com.main.java.avro.User.Builder clearEmail() {
+    public com.main.java.avro.Employee.Builder clearEmail() {
       email = null;
       fieldSetFlags()[2] = false;
       return this;
@@ -274,7 +274,7 @@ public class User extends org.apache.avro.specific.SpecificRecordBase implements
     }
     
     /** Sets the value of the 'phone' field */
-    public com.main.java.avro.User.Builder setPhone(java.lang.String value) {
+    public com.main.java.avro.Employee.Builder setPhone(java.lang.String value) {
       validate(fields()[3], value);
       this.phone = value;
       fieldSetFlags()[3] = true;
@@ -287,7 +287,7 @@ public class User extends org.apache.avro.specific.SpecificRecordBase implements
     }
     
     /** Clears the value of the 'phone' field */
-    public com.main.java.avro.User.Builder clearPhone() {
+    public com.main.java.avro.Employee.Builder clearPhone() {
       phone = null;
       fieldSetFlags()[3] = false;
       return this;
@@ -299,7 +299,7 @@ public class User extends org.apache.avro.specific.SpecificRecordBase implements
     }
     
     /** Sets the value of the 'data' field */
-    public com.main.java.avro.User.Builder setData(java.lang.String value) {
+    public com.main.java.avro.Employee.Builder setData(java.lang.String value) {
       validate(fields()[4], value);
       this.data = value;
       fieldSetFlags()[4] = true;
@@ -312,16 +312,16 @@ public class User extends org.apache.avro.specific.SpecificRecordBase implements
     }
     
     /** Clears the value of the 'data' field */
-    public com.main.java.avro.User.Builder clearData() {
+    public com.main.java.avro.Employee.Builder clearData() {
       data = null;
       fieldSetFlags()[4] = false;
       return this;
     }
 
     @Override
-    public User build() {
+    public Employee build() {
       try {
-        User record = new User();
+        Employee record = new Employee();
         record.userid = fieldSetFlags()[0] ? this.userid : (java.lang.String) defaultValue(fields()[0]);
         record.adid = fieldSetFlags()[1] ? this.adid : (java.lang.String) defaultValue(fields()[1]);
         record.email = fieldSetFlags()[2] ? this.email : (java.lang.String) defaultValue(fields()[2]);
