@@ -1,0 +1,31 @@
+{
+  "namespace": "com.main.java.avro",
+  "type": "record",
+  "name": "UserCohort",
+  "fields": [
+    {
+      "name": "userId",
+      "type": [
+        "null",
+        "string"
+      ],
+      "default": null
+    },
+    {
+      "name": "cohortInfoList",
+      "type": {
+        "type": "array",
+        "items": {
+          "name": "CohortInfo",
+          "type": "record",
+          "fields": [
+            {
+              "name": "cohortId",
+              "type": "string"
+            }
+          ]
+        }
+      }
+    }
+  ]
+}
