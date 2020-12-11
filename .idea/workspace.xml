@@ -2,20 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="3d2ff8e6-e805-4215-a503-c165e9d1d4e3" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/userCohort/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/SparkJob/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/userCohort/src/main/java/com/main/java/app/SparkApp.java" beforeDir="false" afterPath="$PROJECT_DIR$/SparkJob/src/main/java/com/main/java/app/SparkApp.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/userCohort/src/main/java/com/main/java/constants/Constants.java" beforeDir="false" afterPath="$PROJECT_DIR$/SparkJob/src/main/java/com/main/java/constants/Constants.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/userCohort/src/main/java/com/main/java/counters/Counters.java" beforeDir="false" afterPath="$PROJECT_DIR$/SparkJob/src/main/java/com/main/java/counters/Counters.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/userCohort/src/main/java/com/main/java/utils/ApiUtils.java" beforeDir="false" afterPath="$PROJECT_DIR$/SparkJob/src/main/java/com/main/java/utils/ApiUtils.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/userCohort/src/main/java/com/main/java/utils/SparkAvroUtils.java" beforeDir="false" afterPath="$PROJECT_DIR$/SparkJob/src/main/java/com/main/java/utils/SparkAvroUtils.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/userCohort/src/main/resources/User.avsc" beforeDir="false" afterPath="$PROJECT_DIR$/SparkJob/src/main/resources/User.avsc" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/userCohort/src/main/resources/UserCohort.avsc" beforeDir="false" afterPath="$PROJECT_DIR$/SparkJob/src/main/resources/UserCohort.avsc" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/userCohort/target/generated-sources/avro/com/main/java/avro/CohortInfo.java" beforeDir="false" afterPath="$PROJECT_DIR$/SparkJob/target/generated-sources/avro/com/main/java/avro/CohortInfo.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/userCohort/target/generated-sources/avro/com/main/java/avro/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/SparkJob/target/generated-sources/avro/com/main/java/avro/User.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/userCohort/target/generated-sources/avro/com/main/java/avro/UserCohort.java" beforeDir="false" afterPath="$PROJECT_DIR$/SparkJob/target/generated-sources/avro/com/main/java/avro/UserCohort.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/userCohort/userCohort.iml" beforeDir="false" afterPath="$PROJECT_DIR$/SparkJob/SparkJob.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/SparkJob/src/main/java/com/main/java/app/SparkApp.java" beforeDir="false" afterPath="$PROJECT_DIR$/SparkJob/src/main/java/com/main/java/app/SparkApp.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />

@@ -23,7 +23,7 @@ import java.util.*;
 
 /**
  * created by rahul.tandon
- * Given segmenta to fetch the data from hdfs and create key:user value:list of cohorts
+ * fetch the data from hdfs and create key:employeeId value:list of
  */
 public class SparkApp implements Serializable {
 
