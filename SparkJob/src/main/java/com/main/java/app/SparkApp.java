@@ -3,6 +3,7 @@ package com.main.java.app;
 import com.main.java.avro.CohortInfo;
 import com.main.java.avro.Employee;
 import com.main.java.avro.EmployeeProfile;
+import com.main.java.avro.ProfileInfo;
 import com.main.java.avro.User;
 import com.main.java.avro.UserCohort;
 import com.main.java.constants.Constants;
@@ -133,46 +134,46 @@ public class SparkApp implements Serializable {
     /**
      * @param javaSparkContext
      * @param countersMap
-     * @param userCohortRDDArray this is an array of rdd in which each element is an rdd of userId and cohortId
-     * @return userCohortRDD this is the UserCohort rdd which is returned consisting of user cohort data
+     * @param employeeProfileRDDArray this is an array of rdd in which each element is an rdd of userId and cohortId
+     * @return employeeProfileRDD this is the UserCohort rdd which is returned consisting of user cohort data
      * This function converts array of rdd which contains the cohort, userId pairs to user to cohort rdd
      */
-    private JavaRDD<EmployeeProfile> convert(JavaSparkContext javaSparkContext, Map<String, LongAccumulator> countersMap, JavaPairRDD<String, String>[] userCohortRDDArray) {
-        JavaPairRDD<String, String> unionRDD = javaSparkContext.union(userCohortRDDArray);
-        JavaRDD<EmployeeProfile> userCohortRDD = unionRDD
+    private JavaRDD<EmployeeProfile> convert(JavaSparkContext javaSparkContext, Map<String, LongAccumulator> countersMap, JavaPairRDD<String, String>[] employeeProfileRDDArray) {
+        JavaPairRDD<String, String> unionRDD = javaSparkContext.union(employeeProfileRDDArray);
+        JavaRDD<EmployeeProfile> employeeProfileRDD = unionRDD
                 .mapToPair(usersToCohort -> {
-                    countersMap.get(Counters.USER_COHORT_PAIRS).add(1L);
+                    countersMap.get(Counters.EMPLOYEE_PROFILE_PAIRS).add(1L);
                     return new Tuple2<>(usersToCohort._1, usersToCohort._2);
                 })
                 .groupByKey()
                 .map(pair -> {
                     List<String> cohortList = new ArrayList<>();
-                    List<CohortInfo> cohortInfoList = new ArrayList<>();
+                    List<ProfileInfo> profileInfoList = new ArrayList<>();
                     cohortList.addAll((Collection<? extends String>) pair._2);
-                    EmployeeProfile userCohort = new EmployeeProfile();
-                    userCohort.setUserId(pair._1);
+                    EmployeeProfile employeeProfile = new EmployeeProfile();
+                    employeeProfile.setUserId(pair._1);
                     cohortList.forEach(cohort -> {
-                        CohortInfo cohortInfo = new CohortInfo();
-                        cohortInfo.setCohortId(cohort);
-                        cohortInfoList.add(cohortInfo);
+                        ProfileInfo cohortInfo = new ProfileInfo();
+                        cohortInfo.setProfileId(cohort);
+                        profileInfoList.add(cohortInfo);
                     });
-                    userCohort.setCohortInfoList(cohortInfoList);
-                    countersMap.get(Counters.NUMBER_OF_USERS).add(1L);
-                    if (cohortInfoList.size() == 1)
-                        countersMap.get(Counters.ONE_COHORT).add(1L);
-                    else if (cohortInfoList.size() == 2)
-                        countersMap.get(Counters.TWO_COHORTS).add(1L);
-                    else if (cohortInfoList.size() == 3)
-                        countersMap.get(Counters.THREE_COHORTS).add(1L);
-                    else if (cohortInfoList.size() == 4)
-                        countersMap.get(Counters.FOUR_COHORTS).add(1L);
-                    else if (cohortInfoList.size() == 5)
-                        countersMap.get(Counters.FIVE_COHORTS).add(1L);
+                    employeeProfile.setProfileInfoList(profileInfoList);
+                    countersMap.get(Counters.NUMBER_OF_EMPLOYEE).add(1L);
+                    if (profileInfoList.size() == 1)
+                        countersMap.get(Counters.ONE_PROFILE).add(1L);
+                    else if (profileInfoList.size() == 2)
+                        countersMap.get(Counters.TWO_PROFILES).add(1L);
+                    else if (profileInfoList.size() == 3)
+                        countersMap.get(Counters.THREE_PROFILES).add(1L);
+                    else if (profileInfoList.size() == 4)
+                        countersMap.get(Counters.FOUR_PROFILES).add(1L);
+                    else if (profileInfoList.size() == 5)
+                        countersMap.get(Counters.FIVE_PROFILES).add(1L);
                     else
-                        countersMap.get(Counters.MORE_THAN_FIVE_COHORTS).add(1L);
-                    return userCohort;
+                        countersMap.get(Counters.MORE_THAN_FIVE_PROFILES).add(1L);
+                    return employeeProfile;
                 });
-        return userCohortRDD;
+        return employeeProfileRDD;
     }
 
     public static void main(String[] args) {

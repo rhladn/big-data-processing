@@ -12,7 +12,7 @@ public class Counters {
      * Counters for employee profile and kafka publishing
      */
 
-    public static String USER_PROFILE_PAIRS = "USER_PROFILE_PAIRS";
+    public static String EMPLOYEE_PROFILE_PAIRS = "EMPLOYEE_PROFILE_PAIRS";
     public static String NUMBER_OF_EMPLOYEE = "NUMBER_OF_EMPLOYEE";
     public static String NUMBER_OF_PROFILE = "NUMBER_OF_PROFILE";
     public static String ONE_PROFILE = "ONE_PROFILE";
@@ -32,7 +32,7 @@ public class Counters {
         countersMap.put(Counters.FOUR_PROFILES, javaSparkContext.sc().longAccumulator(Counters.FOUR_PROFILES));
         countersMap.put(Counters.FIVE_PROFILES, javaSparkContext.sc().longAccumulator(Counters.FIVE_PROFILES));
         countersMap.put(Counters.MORE_THAN_FIVE_PROFILES, javaSparkContext.sc().longAccumulator(Counters.MORE_THAN_FIVE_PROFILES));
-        countersMap.put(Counters.USER_PROFILE_PAIRS, javaSparkContext.sc().longAccumulator(Counters.USER_PROFILE_PAIRS));
+        countersMap.put(Counters.EMPLOYEE_PROFILE_PAIRS, javaSparkContext.sc().longAccumulator(Counters.EMPLOYEE_PROFILE_PAIRS));
         countersMap.put(Counters.NUMBER_OF_PROFILE, javaSparkContext.sc().longAccumulator(Counters.NUMBER_OF_PROFILE));
         countersMap.put(Counters.NUMBER_OF_EMPLOYEE, javaSparkContext.sc().longAccumulator(Counters.NUMBER_OF_EMPLOYEE));
         return countersMap;
