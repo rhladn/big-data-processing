@@ -33,11 +33,7 @@ public class DataPublisherTopologyBuilder {
         // Initialize environment: prod or preprod
         String env = StringUtils.defaultIfEmpty(System.getenv(ENV), PROD_ENV);
 
-        // Initialize bolts and spouts
-        Map<String, IRichSpout> spouts = new HashMap<>();
-        List<BoltDeclarer> boltDeclarers = new ArrayList<>();
-
-            // Profile Demographics User Cohort
+        // Profile Demographics User Cohort
         IRichSpout userCohortDataSpout = StormUtilities.getKafkaSpoutInstance(EMPLOYEEPROFILE.toString());
         builder.setSpout(EMPLOYEEPROFILE.toString()+ "Queue", userCohortDataSpout,
                 (int)ConfigClientUtils.fetchConfigCompulsary(TOPOLOGY_CONFIG_BUCKET, SPOUT_PARALLELISM_CONFIG_KEY));
@@ -48,25 +44,14 @@ public class DataPublisherTopologyBuilder {
 
         StormTopology topology = builder.createTopology();
 
-        if (!isLocal) {
-            Config conf = new Config();
-            conf.setDebug(ConfigClientUtils.fetchConfigWithDefaultFallback(TOPOLOGY_CONFIG_BUCKET, "isDebug", true));
-            conf.setMessageTimeoutSecs((int) ConfigClientUtils.fetchConfigCompulsary(TOPOLOGY_CONFIG_BUCKET, "messageTimeout"));
-            conf.setNumWorkers((int) ConfigClientUtils.fetchConfigCompulsary(TOPOLOGY_CONFIG_BUCKET, "numWorkers"));
-            conf.setNumAckers((int) ConfigClientUtils.fetchConfigCompulsary(TOPOLOGY_CONFIG_BUCKET, "numAckers"));
-            conf.setMaxSpoutPending((int) ConfigClientUtils.fetchConfigCompulsary(TOPOLOGY_CONFIG_BUCKET, "maxSpoutPending"));
-            conf.registerMetricsConsumer(LoggingMetricsConsumer.class, 10);
-            StormSubmitter.submitTopologyWithProgressBar(ConfigClientUtils.fetchConfigCompulsary(TOPOLOGY_CONFIG_BUCKET, "topologyName") + "-" + env , conf, topology);
-        } else {
-            Config conf = new Config();
-            conf.setDebug(false);
-            conf.setMessageTimeoutSecs(1000);
-            conf.setMaxSpoutPending(1000);
-            conf.setMaxTaskParallelism(3);
-            LocalCluster cluster = new LocalCluster();
-            cluster.submitTopology((String) ConfigClientUtils.fetchConfigCompulsary(TOPOLOGY_CONFIG_BUCKET, "topologyName"), conf, topology);
-            Thread.sleep(1000000);
-            cluster.shutdown();
-        }
+
+        Config conf = new Config();
+        conf.setDebug(ConfigClientUtils.fetchConfigWithDefaultFallback(TOPOLOGY_CONFIG_BUCKET, "isDebug", true));
+        conf.setMessageTimeoutSecs((int) ConfigClientUtils.fetchConfigCompulsary(TOPOLOGY_CONFIG_BUCKET, "messageTimeout"));
+        conf.setNumWorkers((int) ConfigClientUtils.fetchConfigCompulsary(TOPOLOGY_CONFIG_BUCKET, "numWorkers"));
+        conf.setNumAckers((int) ConfigClientUtils.fetchConfigCompulsary(TOPOLOGY_CONFIG_BUCKET, "numAckers"));
+        conf.setMaxSpoutPending((int) ConfigClientUtils.fetchConfigCompulsary(TOPOLOGY_CONFIG_BUCKET, "maxSpoutPending"));
+        conf.registerMetricsConsumer(LoggingMetricsConsumer.class, 10);
+        StormSubmitter.submitTopologyWithProgressBar(ConfigClientUtils.fetchConfigCompulsary(TOPOLOGY_CONFIG_BUCKET, "topologyName") + "-" + env , conf, topology);
     }
 }
