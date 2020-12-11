@@ -1,11 +1,8 @@
 package com.main.java.app;
 
-import com.main.java.avro.CohortInfo;
 import com.main.java.avro.Employee;
 import com.main.java.avro.EmployeeProfile;
 import com.main.java.avro.ProfileInfo;
-import com.main.java.avro.User;
-import com.main.java.avro.UserCohort;
 import com.main.java.constants.Constants;
 import com.main.java.counters.Counters;
 import com.main.java.utils.ApiUtils;
@@ -31,7 +28,7 @@ import java.util.*;
 public class SparkApp implements Serializable {
 
     private JavaSparkContext javaSparkContext;
-    private List<String> cohortId;
+    private List<String> profileId;
     private String outputDir;
     private static Map<String, LongAccumulator> countersMap;
 
@@ -39,41 +36,41 @@ public class SparkApp implements Serializable {
      * The complete flow of Spark Job
      */
     private void process() {
-        JavaPairRDD<String, String>[] userCohortRDDArray = new JavaPairRDD[cohortId.size()];
-        for (int i = 0; i < cohortId.size(); i++) {
+        JavaPairRDD<String, String>[] employeeProfileRDDArray = new JavaPairRDD[profileId.size()];
+        for (int i = 0; i < profileId.size(); i++) {
             try {
-                userCohortRDDArray[i] = getUserToCohortRDD(cohortId.get(i), ApiUtils.get(Constants.url + cohortId.get(i) + "/ACCOUNTID", Constants.xClientIdKey, Constants.xClientIdValue));
+                employeeProfileRDDArray[i] = getEmployeeToProfileRDD(profileId.get(i), ApiUtils.get(Constants.url + profileId.get(i) + "/ACCOUNTID", Constants.xClientIdKey, Constants.xClientIdValue));
             } catch (Exception e) {
-                throw new RuntimeException("exception while processing cohort id " + cohortId.get(i));
+                throw new RuntimeException("exception while processing profile id " + profileId.get(i));
             }
         }
-        JavaRDD<EmployeeProfile> userCohortRDD = convert(javaSparkContext, countersMap, userCohortRDDArray);
-        writeRDDtoAvro(javaSparkContext, userCohortRDD, outputDir);
+        JavaRDD<EmployeeProfile> employeeProfileJavaRDD = convert(javaSparkContext, countersMap, employeeProfileRDDArray);
+        writeRDDtoAvro(javaSparkContext, employeeProfileJavaRDD, outputDir);
     }
 
     /**
-     * @param userCohortRDD    rdd consisting of userCohort data which is written to HDFS as key userId and value userCohort
+     * @param userProfileRDD   rdd consisting of employeeProfile data which is written to HDFS as key userId and value employeeProfileJava
      * @param outputDir        this is the output directory where the data is pushed which is present in config bcuket of airflow
      * @param javaSparkContext This function writes rdd to hdfs path
      */
-    private void writeRDDtoAvro(JavaSparkContext javaSparkContext, JavaRDD<EmployeeProfile> userCohortRDD, String outputDir) {
+    private void writeRDDtoAvro(JavaSparkContext javaSparkContext, JavaRDD<EmployeeProfile> userProfileRDD, String outputDir) {
         SparkAvroUtils.setAvroOutputKeyValue(javaSparkContext, Schema.create(Schema.Type.STRING).toString(), EmployeeProfile.getClassSchema().toString());
-        JavaPairRDD<AvroKey, AvroValue> userCohortAvroPairRDD = userCohortRDD.mapToPair(userCohort -> new Tuple2<>(
-                new AvroKey<>(userCohort.getUserId()), new AvroValue<>(userCohort)));
-        SparkAvroUtils.writeAsKeyValueOutputAvro(javaSparkContext, userCohortAvroPairRDD, outputDir);
+        JavaPairRDD<AvroKey, AvroValue> employeeProfileAvroPairRDD = userProfileRDD.mapToPair(employeeProfile -> new Tuple2<>(
+                new AvroKey<>(employeeProfile.getEmpId()), new AvroValue<>(employeeProfile)));
+        SparkAvroUtils.writeAsKeyValueOutputAvro(javaSparkContext, employeeProfileAvroPairRDD, outputDir);
     }
 
     /**
-     * @param cohortId      this is the cohort Id which is taken from the config bucket reco.cohort.prod
-     * @param inputFilePath this is the file from where the user data is read for a cohort Id
+     * @param profileId      this is the profile Id which is taken from the config bucket reco.profile.prod
+     * @param inputFilePath this is the file from where the user data is read for a profile Id
      *                      This function gets the rdd from the inputFilepath
      */
-    private JavaPairRDD<String, String> getUserToCohortRDD(String cohortId, String inputFilePath) {
+    private JavaPairRDD<String, String> getEmployeeToProfileRDD(String profileId, String inputFilePath) {
         SparkAvroUtils.setAvroInputKeyValue(javaSparkContext, Employee.getClassSchema().toString(), Schema.create(Schema.Type.STRING).toString());
-        JavaPairRDD<AvroKey, AvroValue> userCohortAvroRDD = SparkAvroUtils.readAsKeyInputAvro(javaSparkContext, inputFilePath);
-        return userCohortAvroRDD.mapToPair(tuple -> {
+        JavaPairRDD<AvroKey, AvroValue> employeeProfileAvroRDD = SparkAvroUtils.readAsKeyInputAvro(javaSparkContext, inputFilePath);
+        return employeeProfileAvroRDD.mapToPair(tuple -> {
             Employee user = (Employee) tuple._1.datum();
-            return new Tuple2<>(user.getUserid(), cohortId);
+            return new Tuple2<>(user.getUserid(), profileId);
         });
     }
 
@@ -87,20 +84,20 @@ public class SparkApp implements Serializable {
     }
 
     /**
-     * @param cohortDict this is the cohorts which are fetched from the config bucket reco.cohort.prod
-     *                   This function gets the cohorts from config bucket
+     * @param profileDict this is the profiles which are fetched from the config bucket reco.profile.prod
+     *                   This function gets the profiles from config bucket
      */
-    private void getListOfCohorts(Map<String, String> cohortDict) {
+    private void getListOfProfiles(Map<String, String> profileDict) {
         setCounters(javaSparkContext);
-        cohortId = new ArrayList<>();
-        for (Map.Entry<String, String> entry : cohortDict.entrySet())
-            cohortId.add(entry.getKey());
-        countersMap.get(Counters.NUMBER_OF_COHORTS).add(cohortDict.size());
+        profileId = new ArrayList<>();
+        for (Map.Entry<String, String> entry : profileDict.entrySet())
+            profileId.add(entry.getKey());
+        countersMap.get(Counters.NUMBER_OF_PROFILE).add(profileDict.size());
     }
 
     /**
-     * @param bucketName cohortId#cohortName seperated by _ delimitor
-     * @return Map consisting of cohortId as key and cohortName as value
+     * @param bucketName profileId#profileName seperated by _ delimitor
+     * @return Map consisting of profileId as key and profileName as value
      * */
     private Map<String, String> getMapFromBucket(String bucketName){
         Map<String, String> bucket = new HashMap<>();
@@ -111,13 +108,13 @@ public class SparkApp implements Serializable {
     }
 
     /**
-     * @param bucketName reco.cohort.prod config bucket which contains the cohortIds
+     * @param bucketName reco.profile.prod config bucket which contains the profileIds
      * @param outputDir  sets the outputDir where the data is published to HDFS for hawk consumption
      */
     private void loadConfig(String bucketName, String outputDir) {
-        Map<String, String> cohortDict  = getMapFromBucket(bucketName);
+        Map<String, String> profileDict  = getMapFromBucket(bucketName);
         this.outputDir = outputDir;
-        getListOfCohorts(cohortDict);
+        getListOfProfiles(profileDict);
     }
 
     private void stopAllContext() {
@@ -125,7 +122,7 @@ public class SparkApp implements Serializable {
     }
 
     /**
-     * @param javaSparkContext Creates conters for the user Cohort job
+     * @param javaSparkContext Creates conters for the user Profile job
      */
     private void setCounters(JavaSparkContext javaSparkContext) {
         countersMap = Counters.createUCCounters(javaSparkContext);
@@ -134,28 +131,28 @@ public class SparkApp implements Serializable {
     /**
      * @param javaSparkContext
      * @param countersMap
-     * @param employeeProfileRDDArray this is an array of rdd in which each element is an rdd of userId and cohortId
-     * @return employeeProfileRDD this is the UserCohort rdd which is returned consisting of user cohort data
-     * This function converts array of rdd which contains the cohort, userId pairs to user to cohort rdd
+     * @param employeeProfileRDDArray this is an array of rdd in which each element is an rdd of userId and profileId
+     * @return employeeProfileRDD this is the employeeProfile rdd which is returned consisting of employee profile data
+     * This function converts array of rdd which contains the profile, userId pairs to employee to profile rdd
      */
     private JavaRDD<EmployeeProfile> convert(JavaSparkContext javaSparkContext, Map<String, LongAccumulator> countersMap, JavaPairRDD<String, String>[] employeeProfileRDDArray) {
         JavaPairRDD<String, String> unionRDD = javaSparkContext.union(employeeProfileRDDArray);
         JavaRDD<EmployeeProfile> employeeProfileRDD = unionRDD
-                .mapToPair(usersToCohort -> {
+                .mapToPair(usersToProfile -> {
                     countersMap.get(Counters.EMPLOYEE_PROFILE_PAIRS).add(1L);
-                    return new Tuple2<>(usersToCohort._1, usersToCohort._2);
+                    return new Tuple2<>(usersToProfile._1, usersToProfile._2);
                 })
                 .groupByKey()
                 .map(pair -> {
-                    List<String> cohortList = new ArrayList<>();
+                    List<String> profileList = new ArrayList<>();
                     List<ProfileInfo> profileInfoList = new ArrayList<>();
-                    cohortList.addAll((Collection<? extends String>) pair._2);
+                    profileList.addAll((Collection<? extends String>) pair._2);
                     EmployeeProfile employeeProfile = new EmployeeProfile();
-                    employeeProfile.setUserId(pair._1);
-                    cohortList.forEach(cohort -> {
-                        ProfileInfo cohortInfo = new ProfileInfo();
-                        cohortInfo.setProfileId(cohort);
-                        profileInfoList.add(cohortInfo);
+                    employeeProfile.setEmpId(pair._1);
+                    profileList.forEach(profile -> {
+                        ProfileInfo profileInfo = new ProfileInfo();
+                        profileInfo.setProfileId(profile);
+                        profileInfoList.add(profileInfo);
                     });
                     employeeProfile.setProfileInfoList(profileInfoList);
                     countersMap.get(Counters.NUMBER_OF_EMPLOYEE).add(1L);
