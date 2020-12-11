@@ -20,9 +20,7 @@ public class StormUtilities {
         String hosts = ""; // provide cluster hosts ip seperated by ,
         String id = topic + UUID.randomUUID().toString();
 
-        String valueDeserializer = topic.equals(Priority.P2PRECO.toString()) || topic.equals(Priority.P2PSEEDING.toString())
-                ? ByteArrayDeserializer.class.getName()
-                : StringDeserializer.class.getName();
+        String valueDeserializer = StringDeserializer.class.getName();
 
         KafkaSpout kafkaSpout = new KafkaSpout<>(
                 KafkaSpoutConfig
