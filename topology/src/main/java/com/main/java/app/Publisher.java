@@ -16,20 +16,18 @@ import java.util.*;
 import static com.main.java.utils.Priority.*;
 import static com.main.java.utils.Constants.*;
 
-public class DataPublisherTopologyBuilder {
+public class Publisher {
 
     private static boolean isLocal = false;
     private static final String ENV = "DATA_TOPOLOGY_ENV";
-    private static final String MISC_TOPICS_CONFIG_KEY = "miscTopics";
     private static final String AS_DB_TYPE = "aerospike";
-    private static final String BOLT_PARALLELISM_CONFIG_KEY = "boltParallelism";
     private static final String SPOUT_PARALLELISM_CONFIG_KEY = "spoutParallelism";
     private static final String PROD_ENV = "prod";
 
     public static void main(String[] args) throws Exception {
 
         TopologyBuilder builder = new TopologyBuilder();
-
+        String inferenceASBuckets = "list of aerospike nodes";
         // Initialize environment: prod or preprod
         String env = StringUtils.defaultIfEmpty(System.getenv(ENV), PROD_ENV);
 
