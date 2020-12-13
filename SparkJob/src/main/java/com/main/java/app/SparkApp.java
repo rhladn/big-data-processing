@@ -49,28 +49,28 @@ public class SparkApp implements Serializable {
     }
 
     /**
-     * @param userProfileRDD   rdd consisting of employeeProfile data which is written to HDFS as key userId and value employeeProfileJava
+     * @param empProfileRDD   rdd consisting of employeeProfile data which is written to HDFS as key empId and value employeeProfileJava
      * @param outputDir        this is the output directory where the data is pushed which is present in config bcuket of airflow
      * @param javaSparkContext This function writes rdd to hdfs path
      */
-    private void writeRDDtoAvro(JavaSparkContext javaSparkContext, JavaRDD<EmployeeProfile> userProfileRDD, String outputDir) {
+    private void writeRDDtoAvro(JavaSparkContext javaSparkContext, JavaRDD<EmployeeProfile> empProfileRDD, String outputDir) {
         SparkAvroUtils.setAvroOutputKeyValue(javaSparkContext, Schema.create(Schema.Type.STRING).toString(), EmployeeProfile.getClassSchema().toString());
-        JavaPairRDD<AvroKey, AvroValue> employeeProfileAvroPairRDD = userProfileRDD.mapToPair(employeeProfile -> new Tuple2<>(
+        JavaPairRDD<AvroKey, AvroValue> employeeProfileAvroPairRDD = empProfileRDD.mapToPair(employeeProfile -> new Tuple2<>(
                 new AvroKey<>(employeeProfile.getEmpId()), new AvroValue<>(employeeProfile)));
         SparkAvroUtils.writeAsKeyValueOutputAvro(javaSparkContext, employeeProfileAvroPairRDD, outputDir);
     }
 
     /**
      * @param profileId      this is the profile Id which is taken from the config bucket reco.profile.prod
-     * @param inputFilePath this is the file from where the user data is read for a profile Id
+     * @param inputFilePath this is the file from where the emloyee data is read for a profile Id
      *                      This function gets the rdd from the inputFilepath
      */
     private JavaPairRDD<String, String> getEmployeeToProfileRDD(String profileId, String inputFilePath) {
         SparkAvroUtils.setAvroInputKeyValue(javaSparkContext, Employee.getClassSchema().toString(), Schema.create(Schema.Type.STRING).toString());
         JavaPairRDD<AvroKey, AvroValue> employeeProfileAvroRDD = SparkAvroUtils.readAsKeyInputAvro(javaSparkContext, inputFilePath);
         return employeeProfileAvroRDD.mapToPair(tuple -> {
-            Employee user = (Employee) tuple._1.datum();
-            return new Tuple2<>(user.getUserid(), profileId);
+            Employee emp = (Employee) tuple._1.datum();
+            return new Tuple2<>(emp.getEmpid(), profileId);
         });
     }
 
@@ -122,7 +122,7 @@ public class SparkApp implements Serializable {
     }
 
     /**
-     * @param javaSparkContext Creates conters for the user Profile job
+     * @param javaSparkContext Creates conters for the emp Profile job
      */
     private void setCounters(JavaSparkContext javaSparkContext) {
         countersMap = Counters.createUCCounters(javaSparkContext);
@@ -131,16 +131,16 @@ public class SparkApp implements Serializable {
     /**
      * @param javaSparkContext
      * @param countersMap
-     * @param employeeProfileRDDArray this is an array of rdd in which each element is an rdd of userId and profileId
+     * @param employeeProfileRDDArray this is an array of rdd in which each element is an rdd of empId and profileId
      * @return employeeProfileRDD this is the employeeProfile rdd which is returned consisting of employee profile data
-     * This function converts array of rdd which contains the profile, userId pairs to employee to profile rdd
+     * This function converts array of rdd which contains the profile, empId pairs to employee to profile rdd
      */
     private JavaRDD<EmployeeProfile> convert(JavaSparkContext javaSparkContext, Map<String, LongAccumulator> countersMap, JavaPairRDD<String, String>[] employeeProfileRDDArray) {
         JavaPairRDD<String, String> unionRDD = javaSparkContext.union(employeeProfileRDDArray);
         JavaRDD<EmployeeProfile> employeeProfileRDD = unionRDD
-                .mapToPair(usersToProfile -> {
+                .mapToPair(empToProfile -> {
                     countersMap.get(Counters.EMPLOYEE_PROFILE_PAIRS).add(1L);
-                    return new Tuple2<>(usersToProfile._1, usersToProfile._2);
+                    return new Tuple2<>(empToProfile._1, empToProfile._2);
                 })
                 .groupByKey()
                 .map(pair -> {
