@@ -7,9 +7,9 @@ package com.main.java.avro;
 @SuppressWarnings("all")
 @org.apache.avro.specific.AvroGenerated
 public class Employee extends org.apache.avro.specific.SpecificRecordBase implements org.apache.avro.specific.SpecificRecord {
-  public static final org.apache.avro.Schema SCHEMA$ = new org.apache.avro.Schema.Parser().parse("{\"type\":\"record\",\"name\":\"Employee\",\"namespace\":\"com.main.java.avro\",\"fields\":[{\"name\":\"userid\",\"type\":[\"null\",{\"type\":\"string\",\"avro.java.string\":\"String\"}],\"default\":null},{\"name\":\"adid\",\"type\":[\"null\",{\"type\":\"string\",\"avro.java.string\":\"String\"}],\"default\":null},{\"name\":\"email\",\"type\":[\"null\",{\"type\":\"string\",\"avro.java.string\":\"String\"}],\"default\":null},{\"name\":\"phone\",\"type\":[\"null\",{\"type\":\"string\",\"avro.java.string\":\"String\"}],\"default\":null},{\"name\":\"data\",\"type\":[\"null\",{\"type\":\"string\",\"avro.java.string\":\"String\"}],\"default\":null}]}");
+  public static final org.apache.avro.Schema SCHEMA$ = new org.apache.avro.Schema.Parser().parse("{\"type\":\"record\",\"name\":\"Employee\",\"namespace\":\"com.main.java.avro\",\"fields\":[{\"name\":\"empid\",\"type\":[\"null\",{\"type\":\"string\",\"avro.java.string\":\"String\"}],\"default\":null},{\"name\":\"adid\",\"type\":[\"null\",{\"type\":\"string\",\"avro.java.string\":\"String\"}],\"default\":null},{\"name\":\"email\",\"type\":[\"null\",{\"type\":\"string\",\"avro.java.string\":\"String\"}],\"default\":null},{\"name\":\"phone\",\"type\":[\"null\",{\"type\":\"string\",\"avro.java.string\":\"String\"}],\"default\":null},{\"name\":\"data\",\"type\":[\"null\",{\"type\":\"string\",\"avro.java.string\":\"String\"}],\"default\":null}]}");
   public static org.apache.avro.Schema getClassSchema() { return SCHEMA$; }
-  @Deprecated public java.lang.String userid;
+  @Deprecated public java.lang.String empid;
   @Deprecated public java.lang.String adid;
   @Deprecated public java.lang.String email;
   @Deprecated public java.lang.String phone;
@@ -23,8 +23,8 @@ public class Employee extends org.apache.avro.specific.SpecificRecordBase implem
   /**
    * All-args constructor.
    */
-  public Employee(java.lang.String userid, java.lang.String adid, java.lang.String email, java.lang.String phone, java.lang.String data) {
-    this.userid = userid;
+  public Employee(java.lang.String empid, java.lang.String adid, java.lang.String email, java.lang.String phone, java.lang.String data) {
+    this.empid = empid;
     this.adid = adid;
     this.email = email;
     this.phone = phone;
@@ -35,7 +35,7 @@ public class Employee extends org.apache.avro.specific.SpecificRecordBase implem
   // Used by DatumWriter.  Applications should not call. 
   public java.lang.Object get(int field$) {
     switch (field$) {
-    case 0: return userid;
+    case 0: return empid;
     case 1: return adid;
     case 2: return email;
     case 3: return phone;
@@ -47,7 +47,7 @@ public class Employee extends org.apache.avro.specific.SpecificRecordBase implem
   @SuppressWarnings(value="unchecked")
   public void put(int field$, java.lang.Object value$) {
     switch (field$) {
-    case 0: userid = (java.lang.String)value$; break;
+    case 0: empid = (java.lang.String)value$; break;
     case 1: adid = (java.lang.String)value$; break;
     case 2: email = (java.lang.String)value$; break;
     case 3: phone = (java.lang.String)value$; break;
@@ -57,18 +57,18 @@ public class Employee extends org.apache.avro.specific.SpecificRecordBase implem
   }
 
   /**
-   * Gets the value of the 'userid' field.
+   * Gets the value of the 'empid' field.
    */
-  public java.lang.String getUserid() {
-    return userid;
+  public java.lang.String getEmpid() {
+    return empid;
   }
 
   /**
-   * Sets the value of the 'userid' field.
+   * Sets the value of the 'empid' field.
    * @param value the value to set.
    */
-  public void setUserid(java.lang.String value) {
-    this.userid = value;
+  public void setEmpid(java.lang.String value) {
+    this.empid = value;
   }
 
   /**
@@ -152,7 +152,7 @@ public class Employee extends org.apache.avro.specific.SpecificRecordBase implem
   public static class Builder extends org.apache.avro.specific.SpecificRecordBuilderBase<Employee>
     implements org.apache.avro.data.RecordBuilder<Employee> {
 
-    private java.lang.String userid;
+    private java.lang.String empid;
     private java.lang.String adid;
     private java.lang.String email;
     private java.lang.String phone;
@@ -171,8 +171,8 @@ public class Employee extends org.apache.avro.specific.SpecificRecordBase implem
     /** Creates a Builder by copying an existing Employee instance */
     private Builder(com.main.java.avro.Employee other) {
             super(com.main.java.avro.Employee.SCHEMA$);
-      if (isValidValue(fields()[0], other.userid)) {
-        this.userid = data().deepCopy(fields()[0].schema(), other.userid);
+      if (isValidValue(fields()[0], other.empid)) {
+        this.empid = data().deepCopy(fields()[0].schema(), other.empid);
         fieldSetFlags()[0] = true;
       }
       if (isValidValue(fields()[1], other.adid)) {
@@ -193,27 +193,27 @@ public class Employee extends org.apache.avro.specific.SpecificRecordBase implem
       }
     }
 
-    /** Gets the value of the 'userid' field */
-    public java.lang.String getUserid() {
-      return userid;
+    /** Gets the value of the 'empid' field */
+    public java.lang.String getEmpid() {
+      return empid;
     }
     
-    /** Sets the value of the 'userid' field */
-    public com.main.java.avro.Employee.Builder setUserid(java.lang.String value) {
+    /** Sets the value of the 'empid' field */
+    public com.main.java.avro.Employee.Builder setEmpid(java.lang.String value) {
       validate(fields()[0], value);
-      this.userid = value;
+      this.empid = value;
       fieldSetFlags()[0] = true;
       return this; 
     }
     
-    /** Checks whether the 'userid' field has been set */
-    public boolean hasUserid() {
+    /** Checks whether the 'empid' field has been set */
+    public boolean hasEmpid() {
       return fieldSetFlags()[0];
     }
     
-    /** Clears the value of the 'userid' field */
-    public com.main.java.avro.Employee.Builder clearUserid() {
-      userid = null;
+    /** Clears the value of the 'empid' field */
+    public com.main.java.avro.Employee.Builder clearEmpid() {
+      empid = null;
       fieldSetFlags()[0] = false;
       return this;
     }
@@ -322,7 +322,7 @@ public class Employee extends org.apache.avro.specific.SpecificRecordBase implem
     public Employee build() {
       try {
         Employee record = new Employee();
-        record.userid = fieldSetFlags()[0] ? this.userid : (java.lang.String) defaultValue(fields()[0]);
+        record.empid = fieldSetFlags()[0] ? this.empid : (java.lang.String) defaultValue(fields()[0]);
         record.adid = fieldSetFlags()[1] ? this.adid : (java.lang.String) defaultValue(fields()[1]);
         record.email = fieldSetFlags()[2] ? this.email : (java.lang.String) defaultValue(fields()[2]);
         record.phone = fieldSetFlags()[3] ? this.phone : (java.lang.String) defaultValue(fields()[3]);
