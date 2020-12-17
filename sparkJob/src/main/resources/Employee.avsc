@@ -12,7 +12,7 @@
       "default": null
     },
     {
-      "name": "adid",
+      "name": "empdame",
       "type": [
         "null",
         "string"
@@ -36,7 +36,7 @@
       "default": null
     },
     {
-      "name": "data",
+      "name": "empdata",
       "type": [
         "null",
         "string"
