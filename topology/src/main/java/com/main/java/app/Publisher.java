@@ -31,7 +31,7 @@ public class Publisher {
         // Initialize environment: prod or preprod
         String env = StringUtils.defaultIfEmpty(System.getenv(ENV), PROD_ENV);
 
-        // Profile Demographics User Cohort
+
         IRichSpout userCohortDataSpout = StormUtilities.getKafkaSpoutInstance(EMPLOYEEPROFILE.toString());
         builder.setSpout(EMPLOYEEPROFILE.toString()+ "Queue", userCohortDataSpout,
                 (int)ConfigClientUtils.fetchConfigCompulsary(TOPOLOGY_CONFIG_BUCKET, SPOUT_PARALLELISM_CONFIG_KEY));

@@ -9,5 +9,8 @@
         <module name="topology" />
       </profile>
     </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="SparkJob" target="8" />
+    </bytecodeTargetLevel>
   </component>
 </project>
