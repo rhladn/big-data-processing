@@ -35,11 +35,24 @@ public class DatabasePublisherBolt extends BaseRichBolt {
     private String dbType;
     private List<String> configBuckets;
     private String dataTypeToDBParamBucket;
+    private static final String AEROSPIKE_DB_TYPE = "aerospike";
 
     public DatabasePublisherBolt(String dbType, List<String> configBuckets, String dataTypeToDBParamBucket) {
         this.dbType = dbType;
         this.configBuckets = configBuckets;
         this.dataTypeToDBParamBucket = dataTypeToDBParamBucket;
+    }
+
+    /**
+     * Returns implementation based on the type of database required.
+     */
+    public static <T> IDatabase<T> getDatabaseImpl(String type, String configBucket) {
+        switch (type.toLowerCase()) {
+            case AEROSPIKE_DB_TYPE:
+                return AerospikeDatabase.getInstance(configBucket);
+            default:
+                throw new RuntimeException("unsupported database type");
+        }
     }
 
     /**
@@ -57,7 +70,7 @@ public class DatabasePublisherBolt extends BaseRichBolt {
         });
         databases = new ArrayList<>();
         for (String configBucket: configBuckets){
-            IDatabase<String> database = DatabaseFactory.getDatabaseImpl(dbType, configBucket);
+            IDatabase<String> database = getDatabaseImpl(dbType, configBucket);
             databases.add(database);
         }
         metricRegistry = new MetricRegistry();
@@ -130,3 +143,4 @@ public class DatabasePublisherBolt extends BaseRichBolt {
         reporter.stop();
     }
 }
+

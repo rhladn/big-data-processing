@@ -23,7 +23,7 @@ import java.util.*;
 
 /**
  * created by rahul.tandon
- * fetch the data from hdfs and create key:employeeId value:list of
+ * fetch the data from hdfs and create key:employeeId value:list of profiles
  */
 public class SparkApp implements Serializable {
 
@@ -61,7 +61,7 @@ public class SparkApp implements Serializable {
     }
 
     /**
-     * @param profileId     this is the profile Id which is taken from the config bucket reco.profile.prod
+     * @param profileId     this is the profile Id which is taken from the config bucket profile.prod
      * @param inputFilePath this is the file from where the emloyee data is read for a profile Id
      *                      This function gets the rdd from the inputFilepath
      */
@@ -84,7 +84,7 @@ public class SparkApp implements Serializable {
     }
 
     /**
-     * @param profileDict this is the profiles which are fetched from the config bucket reco.profile.prod
+     * @param profileDict this is the profiles which are fetched from the config bucket profile.prod
      *                    This function gets the profiles from config bucket
      */
     private void getListOfProfiles(Map<String, String> profileDict) {
@@ -108,7 +108,7 @@ public class SparkApp implements Serializable {
     }
 
     /**
-     * @param bucketName reco.profile.prod config bucket which contains the profileIds
+     * @param bucketName profile.prod config bucket which contains the profileIds
      * @param outputDir  sets the outputDir where the data is published to HDFS for hawk consumption
      */
     private void loadConfig(String bucketName, String outputDir) {
@@ -175,6 +175,8 @@ public class SparkApp implements Serializable {
 
     public static void main(String[] args) {
         SparkApp sparkApp = new SparkApp();
+        String bucketName = args[1];
+        String outputDir = args[2];
         sparkApp.initSparkConfigs();
         sparkApp.loadConfig(args[1], args[2]);
         sparkApp.process();
