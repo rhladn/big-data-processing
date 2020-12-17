@@ -49,7 +49,7 @@ public class SparkApp implements Serializable {
     }
 
     /**
-     * @param empProfileRDD   rdd consisting of employeeProfile data which is written to HDFS as key empId and value employeeProfileJava
+     * @param empProfileRDD    rdd consisting of employeeProfile data which is written to HDFS as key empId and value employeeProfileJava
      * @param outputDir        this is the output directory where the data is pushed which is present in config bcuket of airflow
      * @param javaSparkContext This function writes rdd to hdfs path
      */
@@ -61,7 +61,7 @@ public class SparkApp implements Serializable {
     }
 
     /**
-     * @param profileId      this is the profile Id which is taken from the config bucket reco.profile.prod
+     * @param profileId     this is the profile Id which is taken from the config bucket reco.profile.prod
      * @param inputFilePath this is the file from where the emloyee data is read for a profile Id
      *                      This function gets the rdd from the inputFilepath
      */
@@ -85,7 +85,7 @@ public class SparkApp implements Serializable {
 
     /**
      * @param profileDict this is the profiles which are fetched from the config bucket reco.profile.prod
-     *                   This function gets the profiles from config bucket
+     *                    This function gets the profiles from config bucket
      */
     private void getListOfProfiles(Map<String, String> profileDict) {
         setCounters(javaSparkContext);
