@@ -178,7 +178,7 @@ public class SparkApp implements Serializable {
         String bucketName = args[1];
         String outputDir = args[2];
         sparkApp.initSparkConfigs();
-        sparkApp.loadConfig(args[1], args[2]);
+        sparkApp.loadConfig(bucketName, outputDir);
         sparkApp.process();
         sparkApp.stopAllContext();
     }
