@@ -16,9 +16,9 @@ import static com.main.java.constants.Constants.DELIMITOR;
 public class PushToKafka implements Serializable {
 
     private static PushToKafka userCohortPushToKafka = null;
-    private static PushToKafka<String, String> pushToKafka;
-    private static final Priority priority = Priority.USERCOHORT;
-    private static final String semanticType = "UC";
+    private static KafkaPublisher<String, String> pushToKafka;
+    private static final String topicName = "empId";
+    private static final String aerospikeSet = "empId";
 
     private PushToKafka() {
         pushToKafka = KafkaPublisherFactory
