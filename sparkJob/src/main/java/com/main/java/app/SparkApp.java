@@ -23,7 +23,7 @@ import java.util.*;
 
 /**
  * created by rahul.tandon
- * fetch the data from hdfs and create key:employeeId value:list of profiles
+ * fetch the data from HDFS and create key:employeeId value:list of profiles
  */
 public class SparkApp implements Serializable {
 
