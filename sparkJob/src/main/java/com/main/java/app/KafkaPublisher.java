@@ -16,11 +16,12 @@ import java.util.Map;
 public class KafkaPublisher {
 
     /**
-     * @param empProfileRDD rdd consisting of UserCohort data which is pushed to kafka key -> empId value -> EntityRelevance
-     *                      EntityRelevance consists of a list of inference where each inference signifies a cohort
+     * @param empProfileRDD rdd consisting of employee Profile data which is pushed to kafka key -> empId value -> employee details
+     *                      where each inference signifies a Profile
      * @param countersMap   The function is used to push data to kafka
      */
     private static void publishUCtoKafka(JavaPairRDD<String, EmployeeProfile> empProfileRDD, Map<String, LongAccumulator> countersMap) {
+
         empProfileRDD.foreach(tuple -> {
             if (PushToKafka.getInstance().push(tuple._1, tuple._2)) { // function to push to Kafka with empId as key and profile as value
                 countersMap.get(Counters.KAFKA_SUCCESS).add(1L);

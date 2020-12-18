@@ -36,6 +36,7 @@ public class SparkApp implements Serializable {
      * The complete flow of Spark Job
      */
     private void process() {
+
         JavaPairRDD<String, String>[] employeeProfileRDDArray = new JavaPairRDD[profileId.size()];
         for (int i = 0; i < profileId.size(); i++) {
             try {
@@ -54,6 +55,7 @@ public class SparkApp implements Serializable {
      * @param javaSparkContext This function writes rdd to hdfs path
      */
     private void writeRDDtoAvro(JavaSparkContext javaSparkContext, JavaRDD<EmployeeProfile> empProfileRDD, String outputDir) {
+
         SparkAvroUtils.setAvroOutputKeyValue(javaSparkContext, Schema.create(Schema.Type.STRING).toString(), EmployeeProfile.getClassSchema().toString());
         JavaPairRDD<AvroKey, AvroValue> employeeProfileAvroPairRDD = empProfileRDD.mapToPair(employeeProfile -> new Tuple2<>(
                 new AvroKey<>(employeeProfile.getEmpId()), new AvroValue<>(employeeProfile)));
@@ -66,6 +68,7 @@ public class SparkApp implements Serializable {
      *                      This function gets the rdd from the inputFilepath
      */
     private JavaPairRDD<String, String> getEmployeeToProfileRDD(String profileId, String inputFilePath) {
+
         SparkAvroUtils.setAvroInputKeyValue(javaSparkContext, Employee.getClassSchema().toString(), Schema.create(Schema.Type.STRING).toString());
         JavaPairRDD<AvroKey, AvroValue> employeeProfileAvroRDD = SparkAvroUtils.readAsKeyInputAvro(javaSparkContext, inputFilePath);
         return employeeProfileAvroRDD.mapToPair(tuple -> {
@@ -75,6 +78,7 @@ public class SparkApp implements Serializable {
     }
 
     private void initSparkConfigs() {
+
         SparkConf sparkConf = new SparkConf();
         javaSparkContext = new JavaSparkContext(new SparkContext(sparkConf));
         javaSparkContext.hadoopConfiguration().set("io.compression.codecs", "org.apache.hadoop.io.compress.GzipCodec,"
@@ -88,6 +92,7 @@ public class SparkApp implements Serializable {
      *                    This function gets the profiles from config bucket
      */
     private void getListOfProfiles(Map<String, String> profileDict) {
+
         setCounters(javaSparkContext);
         profileId = new ArrayList<>();
         for (Map.Entry<String, String> entry : profileDict.entrySet())
@@ -100,6 +105,7 @@ public class SparkApp implements Serializable {
      * @return Map consisting of profileId as key and profileName as value
      * */
     private Map<String, String> getMapFromBucket(String bucketName){
+
         Map<String, String> bucket = new HashMap<>();
         String[] buckets = bucketName.split("_");
         for(int i=0; i<buckets.length; i++)
@@ -112,12 +118,14 @@ public class SparkApp implements Serializable {
      * @param outputDir  sets the outputDir where the data is published to HDFS for hawk consumption
      */
     private void loadConfig(String bucketName, String outputDir) {
+
         Map<String, String> profileDict  = getMapFromBucket(bucketName);
         this.outputDir = outputDir;
         getListOfProfiles(profileDict);
     }
 
     private void stopAllContext() {
+
         javaSparkContext.stop();
     }
 
@@ -125,6 +133,7 @@ public class SparkApp implements Serializable {
      * @param javaSparkContext Creates conters for the emp Profile job
      */
     private void setCounters(JavaSparkContext javaSparkContext) {
+
         countersMap = Counters.createUCCounters(javaSparkContext);
     }
 
@@ -136,6 +145,7 @@ public class SparkApp implements Serializable {
      * This function converts array of rdd which contains the profile, empId pairs to employee to profile rdd
      */
     private JavaRDD<EmployeeProfile> convert(JavaSparkContext javaSparkContext, Map<String, LongAccumulator> countersMap, JavaPairRDD<String, String>[] employeeProfileRDDArray) {
+
         JavaPairRDD<String, String> unionRDD = javaSparkContext.union(employeeProfileRDDArray);
         JavaRDD<EmployeeProfile> employeeProfileRDD = unionRDD
                 .mapToPair(empToProfile -> {
