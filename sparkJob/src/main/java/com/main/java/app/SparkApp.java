@@ -184,6 +184,7 @@ public class SparkApp implements Serializable {
     }
 
     public static void main(String[] args) {
+
         SparkApp sparkApp = new SparkApp();
         String bucketName = args[1];
         String outputDir = args[2];
