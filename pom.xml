@@ -9,8 +9,7 @@
     <packaging>pom</packaging>
     <version>1.0-SNAPSHOT</version>
     <modules>
-        <module>topology</module>
-        <module>userCohort</module>
+        <module>sparkJob</module>
     </modules>
 
 </project>
