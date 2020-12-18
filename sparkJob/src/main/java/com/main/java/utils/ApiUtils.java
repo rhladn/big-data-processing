@@ -8,7 +8,7 @@ import java.net.URL;
 
 /**
  * Created by rahul.tandon
- * Given AM url and headers output is the path of the rdds consisting of the employee for each profileId
+ * Given AM url and headers output is the path of the rdds consisting of the employee for each categoryId
  */
 public class ApiUtils {
 
@@ -16,7 +16,7 @@ public class ApiUtils {
      * @param url the url which is used to fetch the path of the HDFS input data
      * @param headerKey the headerKey which is used while fetching the output
      * @param headerValue the headerValue which is used while fetching the output
-     * @return OutpathFilePath the HDFS path which contains the data for a profileId
+     * @return OutpathFilePath the HDFS path which contains the data for a categoryId
      * */
     public static String get(String url, String headerKey, String headerValue) throws IOException {
 

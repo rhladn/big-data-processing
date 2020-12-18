@@ -2,7 +2,19 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="3d2ff8e6-e805-4215-a503-c165e9d1d4e3" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/sparkJob/target/generated-sources/avro/com/main/java/avro/CategoryInfo.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/sparkJob/target/generated-sources/avro/com/main/java/avro/EmployeeCategory.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/sparkJob/src/main/java/com/main/java/app/KafkaPublisher.java" beforeDir="false" afterPath="$PROJECT_DIR$/sparkJob/src/main/java/com/main/java/app/KafkaPublisher.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/sparkJob/src/main/java/com/main/java/app/SparkApp.java" beforeDir="false" afterPath="$PROJECT_DIR$/sparkJob/src/main/java/com/main/java/app/SparkApp.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/sparkJob/src/main/java/com/main/java/counters/Counters.java" beforeDir="false" afterPath="$PROJECT_DIR$/sparkJob/src/main/java/com/main/java/counters/Counters.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/sparkJob/src/main/java/com/main/java/utils/ApiUtils.java" beforeDir="false" afterPath="$PROJECT_DIR$/sparkJob/src/main/java/com/main/java/utils/ApiUtils.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/sparkJob/src/main/java/com/main/java/utils/PushToKafka.java" beforeDir="false" afterPath="$PROJECT_DIR$/sparkJob/src/main/java/com/main/java/utils/PushToKafka.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/sparkJob/src/main/resources/Employee.avsc" beforeDir="false" afterPath="$PROJECT_DIR$/sparkJob/src/main/resources/Employee.avsc" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/sparkJob/src/main/resources/EmployeeProfile.avsc" beforeDir="false" afterPath="$PROJECT_DIR$/sparkJob/src/main/resources/EmployeeCategory.avsc" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/sparkJob/target/generated-sources/avro/com/main/java/avro/Employee.java" beforeDir="false" afterPath="$PROJECT_DIR$/sparkJob/target/generated-sources/avro/com/main/java/avro/Employee.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/sparkJob/target/generated-sources/avro/com/main/java/avro/EmployeeProfile.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/sparkJob/target/generated-sources/avro/com/main/java/avro/ProfileInfo.java" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />

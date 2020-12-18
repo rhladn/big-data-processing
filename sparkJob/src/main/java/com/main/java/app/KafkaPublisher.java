@@ -1,5 +1,6 @@
 package com.main.java.app;
 
+import com.main.java.avro.EmployeeCategory;
 import com.main.java.avro.EmployeeProfile;
 import com.main.java.counters.Counters;
 import com.main.java.utils.PushToKafka;
@@ -17,14 +18,13 @@ import java.util.Map;
 public class KafkaPublisher {
 
     /**
-     * @param empProfileRDD rdd consisting of employee Profile data which is pushed to kafka key -> empId value -> employee details
-     *                      where each inference signifies a Profile
+     * @param empProfileRDD rdd consisting of employee Category data which is pushed to kafka key -> empId value -> employee details
      * @param countersMap   The function is used to push data to kafka
      */
-    private static void publishUCtoKafka(JavaPairRDD<String, EmployeeProfile> empProfileRDD, Map<String, LongAccumulator> countersMap) {
+    private static void publishUCtoKafka(JavaPairRDD<String, EmployeeCategory> empProfileRDD, Map<String, LongAccumulator> countersMap) {
 
         empProfileRDD.foreach(tuple -> {
-            if (PushToKafka.push(tuple._1, tuple._2)) { // function to push to Kafka with empId as key and profile as value
+            if (PushToKafka.push(tuple._1, tuple._2)) { // function to push to Kafka with empId as key and category as value
                 countersMap.get(Counters.KAFKA_SUCCESS).add(1L);
             } else {
                 countersMap.get(Counters.KAFKA_FAILURES).add(1L);
@@ -42,14 +42,14 @@ public class KafkaPublisher {
                 + "org.apache.hadoop.io.compress.SnappyCodec,"
                 + "org.apache.hadoop.io.compress.BZip2Codec");
         Map<String, LongAccumulator> countersMap = Counters.createKafkaCounters(javaSparkContext);
-        SparkAvroUtils.setAvroInputKeyValue(javaSparkContext, Schema.create(Schema.Type.STRING).toString(), EmployeeProfile.getClassSchema().toString());
-        JavaPairRDD<String, EmployeeProfile> empProfileRDD = SparkAvroUtils.readAsKeyValueInputeAvro(javaSparkContext, inputFilePath)
+        SparkAvroUtils.setAvroInputKeyValue(javaSparkContext, Schema.create(Schema.Type.STRING).toString(), EmployeeCategory.getClassSchema().toString());
+        JavaPairRDD<String, EmployeeCategory> empCategoryRDD = SparkAvroUtils.readAsKeyValueInputeAvro(javaSparkContext, inputFilePath)
                 .mapToPair(tuple->{
                     String empId = (String) tuple._1.datum();
-                    EmployeeProfile empProfile = EmployeeProfile.newBuilder((EmployeeProfile) tuple._2.datum()).build();
+                    EmployeeCategory empCategory = EmployeeCategory.newBuilder((EmployeeCategory) tuple._2.datum()).build();
                     return new Tuple2<>(empId, empProfile);
                 });
-        publishUCtoKafka(empProfileRDD, countersMap);
+        publishUCtoKafka(empCategoryRDD, countersMap);
         javaSparkContext.stop();
     }
 }

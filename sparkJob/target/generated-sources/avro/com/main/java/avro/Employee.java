@@ -7,10 +7,10 @@ package com.main.java.avro;
 @SuppressWarnings("all")
 @org.apache.avro.specific.AvroGenerated
 public class Employee extends org.apache.avro.specific.SpecificRecordBase implements org.apache.avro.specific.SpecificRecord {
-  public static final org.apache.avro.Schema SCHEMA$ = new org.apache.avro.Schema.Parser().parse("{\"type\":\"record\",\"name\":\"Employee\",\"namespace\":\"com.main.java.avro\",\"fields\":[{\"name\":\"empid\",\"type\":[\"null\",{\"type\":\"string\",\"avro.java.string\":\"String\"}],\"default\":null},{\"name\":\"empdame\",\"type\":[\"null\",{\"type\":\"string\",\"avro.java.string\":\"String\"}],\"default\":null},{\"name\":\"email\",\"type\":[\"null\",{\"type\":\"string\",\"avro.java.string\":\"String\"}],\"default\":null},{\"name\":\"phone\",\"type\":[\"null\",{\"type\":\"string\",\"avro.java.string\":\"String\"}],\"default\":null},{\"name\":\"empdata\",\"type\":[\"null\",{\"type\":\"string\",\"avro.java.string\":\"String\"}],\"default\":null}]}");
+  public static final org.apache.avro.Schema SCHEMA$ = new org.apache.avro.Schema.Parser().parse("{\"type\":\"record\",\"name\":\"Employee\",\"namespace\":\"com.main.java.avro\",\"fields\":[{\"name\":\"empid\",\"type\":[\"null\",{\"type\":\"string\",\"avro.java.string\":\"String\"}],\"default\":null},{\"name\":\"empdate\",\"type\":[\"null\",{\"type\":\"string\",\"avro.java.string\":\"String\"}],\"default\":null},{\"name\":\"email\",\"type\":[\"null\",{\"type\":\"string\",\"avro.java.string\":\"String\"}],\"default\":null},{\"name\":\"phone\",\"type\":[\"null\",{\"type\":\"string\",\"avro.java.string\":\"String\"}],\"default\":null},{\"name\":\"empdata\",\"type\":[\"null\",{\"type\":\"string\",\"avro.java.string\":\"String\"}],\"default\":null}]}");
   public static org.apache.avro.Schema getClassSchema() { return SCHEMA$; }
   @Deprecated public java.lang.String empid;
-  @Deprecated public java.lang.String empdame;
+  @Deprecated public java.lang.String empdate;
   @Deprecated public java.lang.String email;
   @Deprecated public java.lang.String phone;
   @Deprecated public java.lang.String empdata;
@@ -23,9 +23,9 @@ public class Employee extends org.apache.avro.specific.SpecificRecordBase implem
   /**
    * All-args constructor.
    */
-  public Employee(java.lang.String empid, java.lang.String empdame, java.lang.String email, java.lang.String phone, java.lang.String empdata) {
+  public Employee(java.lang.String empid, java.lang.String empdate, java.lang.String email, java.lang.String phone, java.lang.String empdata) {
     this.empid = empid;
-    this.empdame = empdame;
+    this.empdate = empdate;
     this.email = email;
     this.phone = phone;
     this.empdata = empdata;
@@ -36,7 +36,7 @@ public class Employee extends org.apache.avro.specific.SpecificRecordBase implem
   public java.lang.Object get(int field$) {
     switch (field$) {
     case 0: return empid;
-    case 1: return empdame;
+    case 1: return empdate;
     case 2: return email;
     case 3: return phone;
     case 4: return empdata;
@@ -48,7 +48,7 @@ public class Employee extends org.apache.avro.specific.SpecificRecordBase implem
   public void put(int field$, java.lang.Object value$) {
     switch (field$) {
     case 0: empid = (java.lang.String)value$; break;
-    case 1: empdame = (java.lang.String)value$; break;
+    case 1: empdate = (java.lang.String)value$; break;
     case 2: email = (java.lang.String)value$; break;
     case 3: phone = (java.lang.String)value$; break;
     case 4: empdata = (java.lang.String)value$; break;
@@ -72,18 +72,18 @@ public class Employee extends org.apache.avro.specific.SpecificRecordBase implem
   }
 
   /**
-   * Gets the value of the 'empdame' field.
+   * Gets the value of the 'empdate' field.
    */
-  public java.lang.String getEmpdame() {
-    return empdame;
+  public java.lang.String getEmpdate() {
+    return empdate;
   }
 
   /**
-   * Sets the value of the 'empdame' field.
+   * Sets the value of the 'empdate' field.
    * @param value the value to set.
    */
-  public void setEmpdame(java.lang.String value) {
-    this.empdame = value;
+  public void setEmpdate(java.lang.String value) {
+    this.empdate = value;
   }
 
   /**
@@ -153,7 +153,7 @@ public class Employee extends org.apache.avro.specific.SpecificRecordBase implem
     implements org.apache.avro.data.RecordBuilder<Employee> {
 
     private java.lang.String empid;
-    private java.lang.String empdame;
+    private java.lang.String empdate;
     private java.lang.String email;
     private java.lang.String phone;
     private java.lang.String empdata;
@@ -175,8 +175,8 @@ public class Employee extends org.apache.avro.specific.SpecificRecordBase implem
         this.empid = data().deepCopy(fields()[0].schema(), other.empid);
         fieldSetFlags()[0] = true;
       }
-      if (isValidValue(fields()[1], other.empdame)) {
-        this.empdame = data().deepCopy(fields()[1].schema(), other.empdame);
+      if (isValidValue(fields()[1], other.empdate)) {
+        this.empdate = data().deepCopy(fields()[1].schema(), other.empdate);
         fieldSetFlags()[1] = true;
       }
       if (isValidValue(fields()[2], other.email)) {
@@ -218,27 +218,27 @@ public class Employee extends org.apache.avro.specific.SpecificRecordBase implem
       return this;
     }
 
-    /** Gets the value of the 'empdame' field */
-    public java.lang.String getEmpdame() {
-      return empdame;
+    /** Gets the value of the 'empdate' field */
+    public java.lang.String getEmpdate() {
+      return empdate;
     }
     
-    /** Sets the value of the 'empdame' field */
-    public com.main.java.avro.Employee.Builder setEmpdame(java.lang.String value) {
+    /** Sets the value of the 'empdate' field */
+    public com.main.java.avro.Employee.Builder setEmpdate(java.lang.String value) {
       validate(fields()[1], value);
-      this.empdame = value;
+      this.empdate = value;
       fieldSetFlags()[1] = true;
       return this; 
     }
     
-    /** Checks whether the 'empdame' field has been set */
-    public boolean hasEmpdame() {
+    /** Checks whether the 'empdate' field has been set */
+    public boolean hasEmpdate() {
       return fieldSetFlags()[1];
     }
     
-    /** Clears the value of the 'empdame' field */
-    public com.main.java.avro.Employee.Builder clearEmpdame() {
-      empdame = null;
+    /** Clears the value of the 'empdate' field */
+    public com.main.java.avro.Employee.Builder clearEmpdate() {
+      empdate = null;
       fieldSetFlags()[1] = false;
       return this;
     }
@@ -323,7 +323,7 @@ public class Employee extends org.apache.avro.specific.SpecificRecordBase implem
       try {
         Employee record = new Employee();
         record.empid = fieldSetFlags()[0] ? this.empid : (java.lang.String) defaultValue(fields()[0]);
-        record.empdame = fieldSetFlags()[1] ? this.empdame : (java.lang.String) defaultValue(fields()[1]);
+        record.empdate = fieldSetFlags()[1] ? this.empdate : (java.lang.String) defaultValue(fields()[1]);
         record.email = fieldSetFlags()[2] ? this.email : (java.lang.String) defaultValue(fields()[2]);
         record.phone = fieldSetFlags()[3] ? this.phone : (java.lang.String) defaultValue(fields()[3]);
         record.empdata = fieldSetFlags()[4] ? this.empdata : (java.lang.String) defaultValue(fields()[4]);

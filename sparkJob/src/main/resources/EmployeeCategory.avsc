@@ -1,7 +1,7 @@
 {
   "namespace": "com.main.java.avro",
   "type": "record",
-  "name": "EmployeeProfile",
+  "name": "EmployeeCategory",
   "fields": [
     {
       "name": "empId",
@@ -12,15 +12,15 @@
       "default": null
     },
     {
-      "name": "profileInfoList",
+      "name": "categoryInfoList",
       "type": {
         "type": "array",
         "items": {
-          "name": "ProfileInfo",
+          "name": "CategoryInfo",
           "type": "record",
           "fields": [
             {
-              "name": "profileId",
+              "name": "categoryId",
               "type": "string"
             }
           ]

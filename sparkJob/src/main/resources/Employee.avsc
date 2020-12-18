@@ -12,7 +12,7 @@
       "default": null
     },
     {
-      "name": "empdame",
+      "name": "empdate",
       "type": [
         "null",
         "string"
