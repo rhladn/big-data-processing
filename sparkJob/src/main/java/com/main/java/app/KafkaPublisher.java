@@ -2,6 +2,7 @@ package com.main.java.app;
 
 import com.main.java.avro.EmployeeProfile;
 import com.main.java.counters.Counters;
+import com.main.java.utils.PushToKafka;
 import com.main.java.utils.SparkAvroUtils;
 import org.apache.avro.Schema;
 import org.apache.spark.SparkConf;
@@ -11,8 +12,6 @@ import org.apache.spark.api.java.JavaSparkContext;
 import org.apache.spark.util.LongAccumulator;
 import scala.Tuple2;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Map;
 
 public class KafkaPublisher {
@@ -24,7 +23,7 @@ public class KafkaPublisher {
      */
     private static void publishUCtoKafka(JavaPairRDD<String, EmployeeProfile> userCohortRDD, Map<String, LongAccumulator> countersMap) {
         userCohortRDD.foreach(tuple -> {
-            if (UserCohortPushToKafka.getInstance().push(tuple._1, getEntityRelevance(tuple._2))) {
+            if (PushToKafka.getInstance().push(tuple._1, getEntityRelevance(tuple._2))) {
                 countersMap.get(Counters.KAFKA_SUCCESS).add(1L);
             } else {
                 countersMap.get(Counters.KAFKA_FAILURES).add(1L);

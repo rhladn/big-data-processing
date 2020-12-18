@@ -2,8 +2,13 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="3d2ff8e6-e805-4215-a503-c165e9d1d4e3" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/topology/src/main/java/com/main/java/utils/AerospikeClient.java" beforeDir="false" afterPath="$PROJECT_DIR$/topology/src/main/java/com/main/java/utils/AerospikeDatabase.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/sparkJob/SparkJob.iml" beforeDir="false" afterPath="$PROJECT_DIR$/sparkJob/SparkJob.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/sparkJob/src/main/java/com/main/java/app/KafkaPublisher.java" beforeDir="false" afterPath="$PROJECT_DIR$/sparkJob/src/main/java/com/main/java/app/KafkaPublisher.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/sparkJob/src/main/java/com/main/java/constants/Constants.java" beforeDir="false" afterPath="$PROJECT_DIR$/sparkJob/src/main/java/com/main/java/constants/Constants.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/sparkJob/src/main/java/com/main/java/utils/PushToKafka.java" beforeDir="false" afterPath="$PROJECT_DIR$/sparkJob/src/main/java/com/main/java/utils/PushToKafka.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -55,11 +60,12 @@
     <property name="project.structure.side.proportion" value="0.2" />
   </component>
   <component name="RecentsManager">
-    <key name="CopyFile.RECENT_KEYS">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/sparkJob" />
+      <recent name="$PROJECT_DIR$/userCohort/src/main/resources" />
       <recent name="$PROJECT_DIR$/userCohort" />
     </key>
-    <key name="MoveFile.RECENT_KEYS">
-      <recent name="$PROJECT_DIR$/userCohort/src/main/resources" />
+    <key name="CopyFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/userCohort" />
     </key>
   </component>

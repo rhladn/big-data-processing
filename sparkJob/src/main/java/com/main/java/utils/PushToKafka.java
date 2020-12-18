@@ -1,9 +1,11 @@
 package com.main.java.utils;
 
 import lombok.extern.slf4j.Slf4j;
+import org.apache.storm.shade.org.apache.zookeeper.server.ExitCode;
 
 import java.io.Serializable;
 
+import static com.main.java.constants.Constants.DELIMITOR;
 
 /**
  * Created by rahul.tandon
@@ -13,12 +15,12 @@ import java.io.Serializable;
 @Slf4j
 public class PushToKafka implements Serializable {
 
-    private static UserCohortPushToKafka userCohortPushToKafka = null;
+    private static PushToKafka userCohortPushToKafka = null;
     private static PushToKafka<String, String> pushToKafka;
     private static final Priority priority = Priority.USERCOHORT;
     private static final String semanticType = "UC";
 
-    private UserCohortPushToKafka() {
+    private PushToKafka() {
         pushToKafka = KafkaPublisherFactory
                 .getKafkaPublisher(SerializerType.STRING, BD, KafkaConfigProvider.getKafkaConfig(BD), RecoMetricRegistry.getInstance(PHOENIX));
 
@@ -28,11 +30,11 @@ public class PushToKafka implements Serializable {
         }));
     }
 
-    public static UserCohortPushToKafka getInstance() {
+    public static PushToKafka getInstance() {
         if (userCohortPushToKafka == null) {
-            synchronized (UserCohortPushToKafka.class) {
+            synchronized (PushToKafka.class) {
                 if(userCohortPushToKafka == null) {
-                    userCohortPushToKafka = new UserCohortPushToKafka();
+                    userCohortPushToKafka = new PushToKafka();
                 }
             }
         }
@@ -45,7 +47,7 @@ public class PushToKafka implements Serializable {
      */
     public boolean push(String userId, String entityRelevance) {
         try {
-            final String payload = semanticType + DELIMITER + userId + DELIMITER + entityRelevance;
+            final String payload = semanticType + DELIMITOR + userId + DELIMITOR + entityRelevance;
             ExitCode kafkaPublishExitCode = pushToKafka.publish(priority.toString(), payload);
             return !kafkaPublishExitCode.equals(FAILURE);
         } catch (Exception e) {

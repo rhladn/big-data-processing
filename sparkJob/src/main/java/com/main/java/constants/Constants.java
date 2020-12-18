@@ -6,4 +6,5 @@ public class Constants {
     public static String url = "http://10.47.6.194/v0/segment/outputMeta/";
     public static String HASH_DELIMITER = "#";
     public static String DELIMITOR = "_";
+    public static String
 }
