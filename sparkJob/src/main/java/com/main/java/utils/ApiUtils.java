@@ -16,7 +16,7 @@ public class ApiUtils {
      * @param url the url which is used to fetch the path of the HDFS input data
      * @param headerKey the headerKey which is used while fetching the output
      * @param headerValue the headerValue which is used while fetching the output
-     * @return OutpathFilePath the HDFS path which contains the data for a cohortId
+     * @return OutpathFilePath the HDFS path which contains the data for a profileId
      * */
     public static String get(String url, String headerKey, String headerValue) throws IOException {
 
