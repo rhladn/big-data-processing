@@ -22,7 +22,7 @@ public class KafkaPublisher {
      */
     private static void publishUCtoKafka(JavaPairRDD<String, EmployeeProfile> empProfileRDD, Map<String, LongAccumulator> countersMap) {
         empProfileRDD.foreach(tuple -> {
-            if (PushToKafka.getInstance().push(tuple._1, tuple._2)) { // function to push to Kafka with e
+            if (PushToKafka.getInstance().push(tuple._1, tuple._2)) { // function to push to Kafka with empId as key and profile as value
                 countersMap.get(Counters.KAFKA_SUCCESS).add(1L);
             } else {
                 countersMap.get(Counters.KAFKA_FAILURES).add(1L);
