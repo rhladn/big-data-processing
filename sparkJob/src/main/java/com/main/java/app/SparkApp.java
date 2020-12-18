@@ -104,7 +104,7 @@ public class SparkApp implements Serializable {
      * @param bucketName profileId#profileName seperated by _ delimitor
      * @return Map consisting of profileId as key and profileName as value
      * */
-    private Map<String, String> getMapFromBucket(String bucketName){
+    private Map<String, String> getMapFromBucket(String bucketName) {
 
         Map<String, String> bucket = new HashMap<>();
         String[] buckets = bucketName.split("_");
@@ -130,7 +130,7 @@ public class SparkApp implements Serializable {
     }
 
     /**
-     * @param javaSparkContext Creates conters for the emp Profile job
+     * @param javaSparkContext Creates counters for the emp Profile job
      */
     private void setCounters(JavaSparkContext javaSparkContext) {
 
