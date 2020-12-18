@@ -1,11 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="3d2ff8e6-e805-4215-a503-c165e9d1d4e3" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/sparkJob/src/main/java/com/main/java/app/KafkaPublisher.java" beforeDir="false" afterPath="$PROJECT_DIR$/sparkJob/src/main/java/com/main/java/app/KafkaPublisher.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/sparkJob/src/main/java/com/main/java/utils/PushToKafka.java" beforeDir="false" afterPath="$PROJECT_DIR$/sparkJob/src/main/java/com/main/java/utils/PushToKafka.java" afterDir="false" />
-    </list>
+    <list default="true" id="3d2ff8e6-e805-4215-a503-c165e9d1d4e3" name="Default Changelist" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -163,10 +159,10 @@
       <screen x="0" y="0" width="1680" height="1050" />
     </state>
     <state x="308" y="0" key="#com.intellij.refactoring.rename.AutomaticRenamingDialog/0.0.1680.1050@0.0.1680.1050" timestamp="1608209613048" />
-    <state x="578" y="279" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog" timestamp="1605371236621">
+    <state x="578" y="279" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog" timestamp="1608284808739">
       <screen x="0" y="0" width="1680" height="1050" />
     </state>
-    <state x="578" y="279" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog/0.0.1680.1050@0.0.1680.1050" timestamp="1605371236621" />
+    <state x="578" y="279" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog/0.0.1680.1050@0.0.1680.1050" timestamp="1608284808739" />
     <state x="378" y="187" key="Maven.ArtifactSearchDialog" timestamp="1608207065298">
       <screen x="0" y="0" width="1680" height="1050" />
     </state>
@@ -187,9 +183,9 @@
       <screen x="0" y="0" width="1680" height="1050" />
     </state>
     <state x="234" y="222" key="new project wizard/0.0.1680.1050@0.0.1680.1050" timestamp="1608281526327" />
-    <state x="505" y="233" width="670" height="676" key="search.everywhere.popup" timestamp="1607710346875">
+    <state x="505" y="233" width="670" height="676" key="search.everywhere.popup" timestamp="1608284998484">
       <screen x="0" y="0" width="1680" height="1050" />
     </state>
-    <state x="505" y="233" width="670" height="676" key="search.everywhere.popup/0.0.1680.1050@0.0.1680.1050" timestamp="1607710346875" />
+    <state x="505" y="233" width="670" height="676" key="search.everywhere.popup/0.0.1680.1050@0.0.1680.1050" timestamp="1608284998484" />
   </component>
 </project>

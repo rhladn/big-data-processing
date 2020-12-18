@@ -8,7 +8,7 @@ import java.net.URL;
 
 /**
  * Created by rahul.tandon
- * Given AM url and headers output is the path of the rdds consisting of the user for each cohortId
+ * Given AM url and headers output is the path of the rdds consisting of the employee for each profileId
  */
 public class ApiUtils {
 
