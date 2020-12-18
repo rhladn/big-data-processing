@@ -1,4 +1,11 @@
 package com.main.java.utils;
 
-public class ExitCode {
+/**
+ * Exit codes returned by various methods.
+ */
+public enum ExitCode {
+    SUCCESS,
+    FAILURE,
+    INVALID
 }
+

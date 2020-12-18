@@ -32,40 +32,16 @@ public class KafkaPublisher {
         });
     }
 
-    private static void publishCounters(JavaSparkContext javaSparkContext, String counterDate, Map<String, LongAccumulator> countersMap) throws ClassNotFoundException {
-        MysqlDatastore mysqlDatastore = new MysqlDatastore();
-        mysqlDatastore.publishJobCounters(counterDate, javaSparkContext.getConf().get("spark.app.name"), CounterUtils.getSparkCounters(countersMap));
-    }
+    public static void main(String[] args) {
 
-    /**
-     * @param userCohort this is the user cohort which is converted to EntityRelevance object
-     * @return EntityRelevance this is the string which is returned by converting EntityRelevance object to a string by getJson() method
-     * This function converts user cohort to entity relevance in json format to publish to kafka
-     */
-    private static String getEntityRelevance(EmployeeProfile userCohort) {
-        List<Inference> inferenceList = new ArrayList<>();
-        EntityRelevance entityRelevance = new EntityRelevance();
-        userCohort.getCohortInfoList().forEach(cohortInfo -> {
-            Inference inference = new Inference();
-            inference.setInferenceId(cohortInfo.getCohortId());
-            inferenceList.add(inference);
-        });
-        entityRelevance.setEntityRelevance(inferenceList);
-        return entityRelevance.getJson();
-    }
-
-    public static void main(String[] args) throws Exception{
         String inputFilePath = args[1];
-
         SparkConf sparkConf = new SparkConf();
         JavaSparkContext javaSparkContext = new JavaSparkContext(new SparkContext(sparkConf));
         javaSparkContext.hadoopConfiguration().set("io.compression.codecs", "org.apache.hadoop.io.compress.GzipCodec,"
                 + "org.apache.hadoop.io.compress.DefaultCodec,"
                 + "org.apache.hadoop.io.compress.SnappyCodec,"
                 + "org.apache.hadoop.io.compress.BZip2Codec");
-
         Map<String, LongAccumulator> countersMap = Counters.createKafkaCounters(javaSparkContext);
-
         SparkAvroUtils.setAvroInputKeyValue(javaSparkContext, Schema.create(Schema.Type.STRING).toString(), EmployeeProfile.getClassSchema().toString());
         JavaPairRDD<String, EmployeeProfile> userCohortRDD = SparkAvroUtils.readAsKeyValueInputeAvro(javaSparkContext, inputFilePath)
                 .mapToPair(tuple->{
@@ -73,9 +49,7 @@ public class KafkaPublisher {
                     EmployeeProfile userCohort = EmployeeProfile.newBuilder((EmployeeProfile) tuple._2.datum()).build();
                     return new Tuple2<>(userId, userCohort);
                 });
-
         publishUCtoKafka(userCohortRDD, countersMap);
-        publishCounters(javaSparkContext, args[0], countersMap);
         javaSparkContext.stop();
     }
 }

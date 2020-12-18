@@ -3,7 +3,6 @@ package com.main.java.utils;
 import com.codahale.metrics.JmxReporter;
 import com.codahale.metrics.MetricRegistry;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.storm.shade.org.apache.zookeeper.server.ExitCode;
 import org.apache.storm.task.OutputCollector;
 import org.apache.storm.task.TopologyContext;
 import org.apache.storm.topology.OutputFieldsDeclarer;
@@ -14,7 +13,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-
+import com.main.java.utils.ExitCode;
 import static com.main.java.utils.Constants.DELIMITER;
 
 /**
@@ -22,7 +21,7 @@ import static com.main.java.utils.Constants.DELIMITER;
  * appropriate params to write the {@code key-value} pair to the database.
  */
 @Slf4j
-public class DatabasePublisherBolt extends BaseRichBolt {
+public class DataPublisherBolt extends BaseRichBolt {
 
     private OutputCollector collector;
     /**
@@ -37,7 +36,7 @@ public class DatabasePublisherBolt extends BaseRichBolt {
     private String dataTypeToDBParamBucket;
     private static final String AEROSPIKE_DB_TYPE = "aerospike";
 
-    public DatabasePublisherBolt(String dbType, List<String> configBuckets, String dataTypeToDBParamBucket) {
+    public DataPublisherBolt(String dbType, List<String> configBuckets, String dataTypeToDBParamBucket) {
         this.dbType = dbType;
         this.configBuckets = configBuckets;
         this.dataTypeToDBParamBucket = dataTypeToDBParamBucket;
@@ -59,7 +58,6 @@ public class DatabasePublisherBolt extends BaseRichBolt {
      * Initializes the params for the various types of data according to
      * configs.
      */
-
     private void init() {
         initSemanticTypeToDbParams();
         FileClient.addListener(dataTypeToDBParamBucket, new BaseBucketUpdateListener(){

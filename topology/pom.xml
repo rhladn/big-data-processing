@@ -116,6 +116,11 @@
             <version>29.0-jre</version>
             <scope>compile</scope>
         </dependency>
+        <dependency>
+            <groupId>com.aerospike</groupId>
+            <artifactId>aerospike-client</artifactId>
+            <version>5.0.2</version>
+        </dependency>
     </dependencies>
 
 
