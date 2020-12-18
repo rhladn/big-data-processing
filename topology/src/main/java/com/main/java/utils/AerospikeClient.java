@@ -88,9 +88,9 @@ public class AerospikeClient<T> implements IDatabase<T> {
      */
     private Policy initReadPolicy(String configBucket) {
         Policy readPolicy = new Policy();
-        readPolicy.socketTimeout = fetchConfigWithDefaultFallback(configBucket, "readTimeout", 1000);
-        readPolicy.totalTimeout = fetchConfigWithDefaultFallback(configBucket, "readTimeout", 1000);
-        readPolicy.maxRetries = fetchConfigWithDefaultFallback(configBucket, "maxReadRetries", 3);
+        readPolicy.socketTimeout = FileClient(configBucket, "readTimeout", 1000);
+        readPolicy.totalTimeout = FileClient(configBucket, "readTimeout", 1000);
+        readPolicy.maxRetries = FileClient(configBucket, "maxReadRetries", 3);
         readPolicy.sleepBetweenRetries = 2;
         return readPolicy;
     }
@@ -101,10 +101,10 @@ public class AerospikeClient<T> implements IDatabase<T> {
     private WritePolicy initWritePolicy(String configBucket) {
         WritePolicy writePolicy = new WritePolicy();
         writePolicy.recordExistsAction = RecordExistsAction.REPLACE;
-        writePolicy.expiration = fetchConfigWithDefaultFallback(configBucket, "writeTtl", -1);
-        writePolicy.socketTimeout = fetchConfigWithDefaultFallback(configBucket, "writeTimeout", 1000);
-        writePolicy.totalTimeout = fetchConfigWithDefaultFallback(configBucket, "writeTimeout", 1000);
-        writePolicy.maxRetries = fetchConfigWithDefaultFallback(configBucket, "maxWriteRetries", 3);
+        writePolicy.expiration = FileClient(configBucket, "writeTtl", -1);
+        writePolicy.socketTimeout = FileClient(configBucket, "writeTimeout", 1000);
+        writePolicy.totalTimeout = FileClient(configBucket, "writeTimeout", 1000);
+        writePolicy.maxRetries = FileClient(configBucket, "maxWriteRetries", 3);
         writePolicy.sleepBetweenRetries = 2;
         return writePolicy;
     }
@@ -115,9 +115,9 @@ public class AerospikeClient<T> implements IDatabase<T> {
     private BatchPolicy initBatchPolicy(String configBucket) {
         BatchPolicy batchPolicy = new BatchPolicy();
         batchPolicy.maxConcurrentThreads = 0;
-        batchPolicy.socketTimeout = fetchConfigWithDefaultFallback(configBucket, "readTimeout", 1000);
-        batchPolicy.totalTimeout = fetchConfigWithDefaultFallback(configBucket, "readTimeout", 1000);
-        batchPolicy.maxRetries = fetchConfigWithDefaultFallback(configBucket, "maxReadRetries", 3);
+        batchPolicy.socketTimeout = FileClient(configBucket, "readTimeout", 1000);
+        batchPolicy.totalTimeout = FileClient(configBucket, "readTimeout", 1000);
+        batchPolicy.maxRetries = FileClient(configBucket, "maxReadRetries", 3);
         batchPolicy.maxRetries = 2;
         return batchPolicy;
     }
@@ -127,7 +127,7 @@ public class AerospikeClient<T> implements IDatabase<T> {
      */
     private ClientPolicy initClientPolicy(String configBucket) {
         ClientPolicy clientPolicy = new ClientPolicy();
-        clientPolicy.maxConnsPerNode = fetchConfigWithDefaultFallback(configBucket, "numClientConnections", 50);
+        clientPolicy.maxConnsPerNode = FileClient(configBucket, "numClientConnections", 50);
         clientPolicy.readPolicyDefault = initReadPolicy(configBucket);
         clientPolicy.writePolicyDefault = initWritePolicy(configBucket);
         clientPolicy.batchPolicyDefault = initBatchPolicy(configBucket);

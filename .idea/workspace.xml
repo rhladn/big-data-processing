@@ -3,11 +3,6 @@
   <component name="ChangeListManager">
     <list default="true" id="3d2ff8e6-e805-4215-a503-c165e9d1d4e3" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/sparkJob/src/main/java/com/main/java/app/KafkaPublisher.java" beforeDir="false" afterPath="$PROJECT_DIR$/sparkJob/src/main/java/com/main/java/app/KafkaPublisher.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/topology/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/topology/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/topology/src/main/java/com/main/java/utils/AerospikeClient.java" beforeDir="false" afterPath="$PROJECT_DIR$/topology/src/main/java/com/main/java/utils/AerospikeClient.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/topology/src/main/java/com/main/java/utils/DataPublisherBolt.java" beforeDir="false" afterPath="$PROJECT_DIR$/topology/src/main/java/com/main/java/utils/DataPublisherBolt.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/topology/src/main/java/com/main/java/utils/ExitCode.java" beforeDir="false" afterPath="$PROJECT_DIR$/topology/src/main/java/com/main/java/utils/ExitCode.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
