@@ -46,7 +46,7 @@ public class KafkaPublisher {
                 .mapToPair(tuple->{
                     String empId = (String) tuple._1.datum();
                     EmployeeCategory empCategory = EmployeeCategory.newBuilder((EmployeeCategory) tuple._2.datum()).build();
-                    return new Tuple2<>(empId, empProfile);
+                    return new Tuple2<>(empId, empCategory);
                 });
         publishUCtoKafka(empCategoryRDD, countersMap);
         javaSparkContext.stop();
