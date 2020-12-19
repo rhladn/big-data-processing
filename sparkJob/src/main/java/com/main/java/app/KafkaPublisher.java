@@ -20,7 +20,7 @@ public class KafkaPublisher {
      * @param empProfileRDD rdd consisting of employee Category data which is pushed to kafka key -> empId value -> employee details
      * @param countersMap   The function is used to push data to kafka
      */
-    private static void publishUCtoKafka(JavaPairRDD<String, EmployeeCategory> empProfileRDD, Map<String, LongAccumulator> countersMap) {
+    private static void publishtoKafka(JavaPairRDD<String, EmployeeCategory> empProfileRDD, Map<String, LongAccumulator> countersMap) {
 
         empProfileRDD.foreach(tuple -> {
             if (PushToKafka.push(tuple._1, tuple._2)) { // function to push to Kafka with empId as key and category as value
@@ -48,7 +48,7 @@ public class KafkaPublisher {
                     EmployeeCategory empCategory = EmployeeCategory.newBuilder((EmployeeCategory) tuple._2.datum()).build();
                     return new Tuple2<>(empId, empCategory);
                 });
-        publishUCtoKafka(empCategoryRDD, countersMap);
+        publishtoKafka(empCategoryRDD, countersMap);
         javaSparkContext.stop();
     }
 }
