@@ -1,7 +1,6 @@
 package com.main.java.app;
 
 import com.main.java.avro.EmployeeCategory;
-import com.main.java.avro.EmployeeProfile;
 import com.main.java.counters.Counters;
 import com.main.java.utils.PushToKafka;
 import com.main.java.utils.SparkAvroUtils;

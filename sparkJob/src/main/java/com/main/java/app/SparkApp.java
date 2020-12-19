@@ -50,7 +50,7 @@ public class SparkApp implements Serializable {
     }
 
     /**
-     * @param empProfileRDD    rdd consisting of employeeProfile data which is written to HDFS as key empId and value employeeProfileJava
+     * @param empCategoryRDD    rdd consisting of employeeProfile data which is written to HDFS as key empId and value employeeProfileJava
      * @param outputDir        this is the output directory where the data is pushed which is present in config bcuket of airflow
      * @param javaSparkContext This function writes rdd to hdfs path
      */
