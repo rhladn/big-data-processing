@@ -6,11 +6,11 @@ import org.apache.spark.util.LongAccumulator;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * Created by rahul.tandon
+ * Counters for employee category and kafka publishing
+ */
 public class Counters {
-    /**
-     * Created by rahul.tandon
-     * Counters for employee category and kafka publishing
-     */
 
     public static String EMPLOYEE_CATEGORY_PAIRS = "EMPLOYEE_CATEGORY_PAIRS";
     public static String NUMBER_OF_EMPLOYEE = "NUMBER_OF_EMPLOYEE";

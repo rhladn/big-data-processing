@@ -14,6 +14,9 @@ import scala.Tuple2;
 
 import java.util.Map;
 
+/**
+ * created by rahul.tandon
+ */
 public class KafkaPublisher {
 
     /**
