@@ -58,6 +58,9 @@ directory_present = os.popen('if hadoop fs -test -d '
                              + "then echo 'true';else echo 'false'; fi"
                              ).read().replace('\n', '')
 
+"""
+Arguments for airflow dag
+"""
 args = {
     'owner': 'rahul.tandon',
     'start_date': utils.dates.days_ago(1),
@@ -70,6 +73,9 @@ args = {
     'retry_delay': timedelta(minutes=1)
 }
 
+"""
+Airflow Dag parameters
+"""
 dag = DAG(
     'airflow_dag',
     description='airflow pipeline',
@@ -79,6 +85,9 @@ dag = DAG(
     default_args=args,
     )
 
+"""
+Gets compute date of the airflow task
+"""
 compute_date_task = PythonOperator(
     task_id = 'get_compute_date',
     python_callable = dag_utils.get_compute_date,
@@ -87,11 +96,13 @@ compute_date_task = PythonOperator(
     dag = dag
 )
 
+"""
+Gets dag run id
+"""
 def get_dag_run_id(**kwargs):
     context = kwargs
     dagRunId = context['dag_run'].run_id
     kwargs['ti'].xcom_push(key='dagRunId', value=dagRunId)
-
 
 dag_run_id = PythonOperator(task_id='dag_run_id',
                             python_callable=get_dag_run_id,
@@ -134,6 +145,9 @@ def is_dir_available(**context):
     else:
         return 'email_task_success'
 
+"""
+return whether to exit the dag or run the next steps of dag
+"""
 def is_updated(**context):
     ti = context['ti']
     is_updated = ti.xcom_pull(key='dagUpdated', task_ids='check_update')
@@ -155,6 +169,9 @@ prepare_inputs_task = ShellOperator(
         dag=dag
         )
 
+"""
+delete output directory if present
+"""
 delete_output_dir = ShellOperator(
     dag=dag,
     task_id="delete_output_dir",
@@ -163,6 +180,9 @@ delete_output_dir = ShellOperator(
     trigger_rule='one_success'
     )
 
+"""
+check whether output directory is created
+"""
 check_output_dir_status = BranchPythonOperator(
     task_id='check_output_dir_status',
     provide_context=True,
@@ -172,6 +192,9 @@ check_output_dir_status = BranchPythonOperator(
     trigger_rule='one_success'
     )
 
+"""
+take lock to avoid running two instances together
+"""
 take_lock_task = ShellOperator(
     dag=dag, task_id='take_lock_task',
     supress_exception=1,
@@ -179,6 +202,9 @@ take_lock_task = ShellOperator(
     trigger_rule='one_success'
     )
 
+"""
+check whether we need to run the airflow dag or not
+"""
 check_update = JavaOperator(
     task_id='check_update',
     main_class='com.airflow.CheckUpdate',
@@ -191,6 +217,9 @@ check_update = JavaOperator(
     dag=dag,
     )
 
+"""
+branch the dag
+"""
 branch_dag = BranchPythonOperator(
     task_id='branch_dag',
     provide_context=True,
@@ -199,6 +228,9 @@ branch_dag = BranchPythonOperator(
     trigger_rule='one_success'
     )
 
+"""
+Initializes the task for the pipeline
+"""
 initialize_args = copy.deepcopy(app_args)
 initialize_args.update({'application_args': 'initialize'})
 initialize_args['main_class_config']['airflowRunId'] = '${dagRunId}'
@@ -218,6 +250,9 @@ initialize_task = JavaOperator(
     dag=dag,
     )
 
+"""
+Spark job to do the computation
+"""
 spark_args = {
     'conf': str(config_bucket_json['spark_config']),
     'num_executors': str(config_bucket_json['num_executors']),
@@ -247,6 +282,9 @@ spark_pipeline_task = SparkSubmitOperator(
     trigger_rule='one_success',
     )
 
+"""
+Job to publish counters
+"""
 publish_job_counters_args = copy.deepcopy(app_args)
 publish_job_counters_args.update({'application_args': '${runId} AirflowCounters: SparkJob:'})
 publish_job_counters_args['main_class_config']['runId'] = '${runId}'
@@ -268,7 +306,7 @@ publish_job_counters_task = JavaOperator(
     )
 
 """
-Failed-release-lock
+Release lock on failure
 """
 failed_release_lock_task = ShellOperator(
                                     task_id="failed-release-lock",
@@ -278,6 +316,9 @@ failed_release_lock_task = ShellOperator(
                                     dag=dag
                                     )
 
+"""
+Release lock on success
+"""
 release_lock_task = ShellOperator(dag=dag, task_id='release_lock',
                                   supress_exception=1,
                                   command='sudo -u hadoop dfs -rm -r '
@@ -285,6 +326,9 @@ release_lock_task = ShellOperator(dag=dag, task_id='release_lock',
                                   trigger_rule='one_success'
                                   )
 
+"""
+Email on success
+"""
 success_email_task = EmailOperator(
         to=success_email_address,
         task_id='email_task_success',
@@ -298,6 +342,9 @@ success_email_task = EmailOperator(
         dag=dag,
         )
 
+"""
+Sub dag runs only if output directory present, used to email the output directory in email
+"""
 sub_task = SubDagOperator(
     task_id = "sub_task",
     subdag=sub_dag(args, "airflow_dag", "sub_task", schedule_interval="0 * * * *",startDate=datetime(2020, 05, 10, tzinfo=pendulum.timezone('Asia/Kolkata'))),
@@ -306,6 +353,9 @@ sub_task = SubDagOperator(
     dag=dag
     )
 
+"""
+Email on Failure
+"""
 failure_email_task = EmailOperator(
     to=failure_email_address,
     task_id='email_task_failure',
@@ -318,6 +368,9 @@ failure_email_task = EmailOperator(
     dag=dag,
     )
 
+"""
+Failure Email on lock failure for example if any other instance is running the second instance will fail with the lock failure message
+"""
 failed_lock_email = EmailOperator(
     to=failure_email_address,
     task_id='failed_lock_email',
@@ -329,6 +382,9 @@ failed_lock_email = EmailOperator(
     dag=dag,
     )
 
+"""
+Close pipeline task used to close the airflow task. Used to update MYSQL flags for counter setting during run of the airflow
+"""
 close_args = copy.deepcopy(app_args)
 close_args.update({'application_args': 'close'})
 close_args['main_class_config']['runId'] = '${runId}'
@@ -350,6 +406,9 @@ close_task = JavaOperator(
     dag=dag,
     )
 
+"""
+Set Failure Flag on MYSQL
+"""
 failed_close_task = JavaOperator(
     task_id='failed_close_pipeline',
     main_class='com.main.java.PipelineHandler',
@@ -366,6 +425,9 @@ failed_close_task = JavaOperator(
     trigger_rule='one_failed',
     )
 
+"""
+Release lock on success of previous task which denotes failure
+"""
 release_lock_on_failure = ShellOperator(
     dag=dag,
     task_id="release_lock_on_failure",
@@ -374,11 +436,17 @@ release_lock_on_failure = ShellOperator(
     trigger_rule="one_success"
 )
 
+"""
+Raise Airflow exception to avoid success being shown in Airflow dag
+"""
 def is_dag_failure(**context):
   raise AirflowException(
       "Airflow dag has failed"
   )
 
+"""
+Dag failure task which is used to throw exception so that Airflow does not show success
+"""
 dag_failure_task = PythonOperator(
     task_id='dag_failure_task',
     provide_context=True,
@@ -388,6 +456,9 @@ dag_failure_task = PythonOperator(
     dag=dag
     )
 
+"""
+Exit the dag if no update is done using dummy operator
+"""
 exit_dag = DummyOperator(
     task_id='exit_dag',
     dag=dag
