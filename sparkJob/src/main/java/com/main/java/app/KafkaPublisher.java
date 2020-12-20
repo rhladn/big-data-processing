@@ -26,7 +26,7 @@ public class KafkaPublisher {
     private static void publishtoKafka(JavaPairRDD<String, EmployeeCategory> empProfileRDD, Map<String, LongAccumulator> countersMap) {
 
         empProfileRDD.foreach(tuple -> {
-            if (PushToKafka.push(tuple._1, tuple._2)) { // function to push to Kafka with empId as key and category as value
+            if (PushToKafka.push(tuple._1, tuple._2)) { // KafkaClient(not implemented) to push to Kafka with empId as key and category as value
                 countersMap.get(Counters.KAFKA_SUCCESS).add(1L);
             } else {
                 countersMap.get(Counters.KAFKA_FAILURES).add(1L);
