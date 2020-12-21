@@ -462,7 +462,7 @@ Exit the dag if no update is done using dummy operator
 exit_dag = DummyOperator(
     task_id='exit_dag',
     dag=dag
-)
+    )
 
 check_update >> branch_dag >> dag_run_id >> compute_date_task >> check_lock_task >> lock_branching_task
 lock_branching_task >> take_lock_task >> prepare_inputs_task >> initialize_task >> delete_output_dir >> spark_pipeline_task >> close_task >> publish_job_counters_task >> check_output_dir_status >> sub_task >> release_lock_task
