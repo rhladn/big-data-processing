@@ -1,5 +1,5 @@
 # distributed-big-data-systems
-Spark Job.java: fetches Avro data from HDFS in the format Key->value1, value2... from different HDFS paths and combines them and dumps data in the format of value1->key1, value2->key2 Avro format in HDFS and in Kafka.
+Spark Job.java: fetches Avro data from HDFS in the format path key contains values. From different HDFS paths fetch input and combine them and dumps data in the format of value1->key1, value2->key2 Avro format in HDFS and in Kafka.
 
 KafkaPublisher.java: fetches data from HDFS to publish it to Kafka.
 (this was implemented seperately to reduce parallelism while publishing to Kafka).
