@@ -26,7 +26,7 @@ public class KafkaClient {
     private void publishtoKafka(JavaPairRDD<String, EmployeeCategory> empProfileRDD, Map<String, LongAccumulator> countersMap) {
 
         Map<String, Object> kafkaConfig = new HashMap();
-        KafkaPublisher kafkaPublisher = new KafkaPublisher(kafkaConfig, Metricregistry.getInstance(MetricRegistryName.PHOENIX));
+        KafkaPublisher kafkaPublisher = new KafkaPublisher(kafkaConfig, Metricregistry.getInstance(MetricRegistryName.NAME));
         empProfileRDD.foreach(tuple -> {
             if (kafkaPublisher.publish(tuple._1, tuple._2) == ExitCode.SUCCESS) {
                 countersMap.get(Counters.KAFKA_SUCCESS).add(1L);

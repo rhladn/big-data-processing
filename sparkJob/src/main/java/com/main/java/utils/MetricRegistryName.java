@@ -2,7 +2,7 @@ package com.main.java.utils;
 
 public enum MetricRegistryName {
 
-    PHOENIX("phoenix");
+    NAME("name");
 
     private String value;
 
