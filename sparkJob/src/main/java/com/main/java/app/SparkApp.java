@@ -63,7 +63,7 @@ public class SparkApp implements Serializable {
     }
 
     /**
-     * @param categoryId     this is the category Id which is taken from the config bucket category.prod
+     * @param categoryId  this is the category Id which is taken from the config bucket category.prod
      * @param inputFilePath this is the file from where the employee data is read for a category Id
      *                      This function gets the rdd from the inputFilepath
      */

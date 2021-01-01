@@ -343,7 +343,7 @@ success_email_task = EmailOperator(
         )
 
 """
-Sub dag runs only if output directory present, used to email the output directory in email
+Sub dag runs only if output directory present, used to attach the output directory in email
 """
 sub_task = SubDagOperator(
     task_id = "sub_task",

@@ -21,26 +21,31 @@ public class SparkAvroUtils {
 
     public static void writeAsKeyValueOutputAvro(JavaSparkContext javaSparkContext, JavaPairRDD<AvroKey, AvroValue> processedAvroRecords,
                                                  String outputFilePath) {
+
         processedAvroRecords.saveAsNewAPIHadoopFile(outputFilePath, AvroKey.class, AvroValue.class,
                 AvroKeyValueOutputFormat.class, javaSparkContext.hadoopConfiguration());
     }
 
-    public static JavaPairRDD<AvroKey, AvroValue> readAsKeyInputAvro(JavaSparkContext javaSparkContext, String inputFilePath){
+    public static JavaPairRDD<AvroKey, AvroValue> readAsKeyInputAvro(JavaSparkContext javaSparkContext, String inputFilePath) {
+
         return javaSparkContext.newAPIHadoopFile(inputFilePath, AvroKeyInputFormat.class,
                 AvroKey.class, AvroValue.class, javaSparkContext.hadoopConfiguration());
     }
 
-    public static JavaPairRDD<AvroKey, AvroValue> readAsKeyValueInputeAvro(JavaSparkContext javaSparkContext, String inputFilePath){
+    public static JavaPairRDD<AvroKey, AvroValue> readAsKeyValueInputeAvro(JavaSparkContext javaSparkContext, String inputFilePath) {
+
         return javaSparkContext.newAPIHadoopFile(inputFilePath, AvroKeyValueInputFormat.class,
                 AvroKey.class, AvroValue.class, javaSparkContext.hadoopConfiguration());
     }
 
-    public static void setAvroOutputKeyValue(JavaSparkContext javaSparkContext, String outputKey, String outputValue){
+    public static void setAvroOutputKeyValue(JavaSparkContext javaSparkContext, String outputKey, String outputValue) {
+
         javaSparkContext.hadoopConfiguration().set(AVRO_SCHEMA_OUTPUT_KEY, outputKey);
         javaSparkContext.hadoopConfiguration().set(AVRO_SCHEMA_OUTPUT_VALUE, outputValue);
     }
 
-    public static void setAvroInputKeyValue(JavaSparkContext javaSparkContext, String inputKey, String inputValue){
+    public static void setAvroInputKeyValue(JavaSparkContext javaSparkContext, String inputKey, String inputValue) {
+
         javaSparkContext.hadoopConfiguration().set(AVRO_SCHEMA_INPUT_KEY, inputKey);
         javaSparkContext.hadoopConfiguration().set(AVRO_SCHEMA_INPUT_VALUE, inputValue);
     }

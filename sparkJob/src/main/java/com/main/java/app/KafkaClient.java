@@ -2,8 +2,7 @@ package com.main.java.app;
 
 import com.main.java.avro.EmployeeCategory;
 import com.main.java.counters.Counters;
-import com.main.java.utils.PushToKafka;
-import com.main.java.utils.SparkAvroUtils;
+import com.main.java.utils.*;
 import org.apache.avro.Schema;
 import org.apache.spark.SparkConf;
 import org.apache.spark.SparkContext;
@@ -12,21 +11,24 @@ import org.apache.spark.api.java.JavaSparkContext;
 import org.apache.spark.util.LongAccumulator;
 import scala.Tuple2;
 
+import java.util.HashMap;
 import java.util.Map;
 
 /**
  * created by rahul.tandon
  */
-public class KafkaPublisher {
+public class KafkaClient {
 
     /**
      * @param empProfileRDD rdd consisting of employee Category data which is pushed to kafka key -> empId value -> employee details
      * @param countersMap   The function is used to push data to kafka
      */
-    private static void publishtoKafka(JavaPairRDD<String, EmployeeCategory> empProfileRDD, Map<String, LongAccumulator> countersMap) {
+    private void publishtoKafka(JavaPairRDD<String, EmployeeCategory> empProfileRDD, Map<String, LongAccumulator> countersMap) {
 
+        Map<String, Object> kafkaConfig = new HashMap();
+        KafkaPublisher kafkaPublisher = new KafkaPublisher(kafkaConfig, Metricregistry.getInstance(MetricRegistryName.PHOENIX));
         empProfileRDD.foreach(tuple -> {
-            if (PushToKafka.push(tuple._1, tuple._2)) { // KafkaClient(not implemented) to push to Kafka with empId as key and category as value
+            if (kafkaPublisher.publish(tuple._1, tuple._2) == ExitCode.SUCCESS) {
                 countersMap.get(Counters.KAFKA_SUCCESS).add(1L);
             } else {
                 countersMap.get(Counters.KAFKA_FAILURES).add(1L);
@@ -51,7 +53,7 @@ public class KafkaPublisher {
                     EmployeeCategory empCategory = EmployeeCategory.newBuilder((EmployeeCategory) tuple._2.datum()).build();
                     return new Tuple2<>(empId, empCategory);
                 });
-        publishtoKafka(empCategoryRDD, countersMap);
+        new KafkaClient().publishtoKafka(empCategoryRDD, countersMap);
         javaSparkContext.stop();
     }
 }

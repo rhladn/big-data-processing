@@ -2,9 +2,16 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="3d2ff8e6-e805-4215-a503-c165e9d1d4e3" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/airflow-dags/src/main/airflow/dag_utils.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/sparkJob/src/main/java/com/main/java/utils/ExitCode.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/sparkJob/src/main/java/com/main/java/utils/KafkaPublisher.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/sparkJob/src/main/java/com/main/java/utils/MetricRegistryName.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/sparkJob/src/main/java/com/main/java/utils/RecoMetricRegistry.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/airflow-dags/src/main/airflow/airflow.py" beforeDir="false" afterPath="$PROJECT_DIR$/airflow-dags/src/main/airflow/airflow.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/sparkJob/src/main/java/com/main/java/app/KafkaPublisher.java" beforeDir="false" afterPath="$PROJECT_DIR$/sparkJob/src/main/java/com/main/java/app/KafkaClient.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/sparkJob/src/main/java/com/main/java/app/SparkApp.java" beforeDir="false" afterPath="$PROJECT_DIR$/sparkJob/src/main/java/com/main/java/app/SparkApp.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/sparkJob/src/main/java/com/main/java/utils/PushToKafka.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/sparkJob/src/main/java/com/main/java/utils/SparkAvroUtils.java" beforeDir="false" afterPath="$PROJECT_DIR$/sparkJob/src/main/java/com/main/java/utils/SparkAvroUtils.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
